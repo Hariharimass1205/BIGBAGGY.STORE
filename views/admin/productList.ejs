@@ -1,0 +1,143 @@
+<!-- <%- include('../layouts/adminHeader.ejs') %> -->
+
+
+<main class="main-wrap">
+    <header class="main-header navbar">
+        <div class="col-search">
+           
+        </div>
+        <div>
+            <a href="/admin" class="btn btn-primary">Logout</a>
+          </div>
+    </header>
+
+    <section class="content-main">
+      <div class="content-header">
+          <div>
+              <h2 class="content-title card-title">Products List</h2>
+              <p>List of products in this store</p>
+          </div>
+          <div>
+
+              <a href="/admin/addProduct" class="btn btn-primary btn-sm rounded">Add new product</a>
+          </div>
+      </div>
+      <div class="card mb-4">
+          <header class="card-header">
+              
+          </header> <!-- card-header end// -->
+          <div class="card-body">
+
+              <table id="example" class="display" style="width:100%">
+                  <thead>
+                      <tr>
+                          <th>Product Name</th>
+                          <th>Parent Category</th>
+                          <th>Product Image1</th>
+                          <th>Product Image2</th>
+                          <th>Product Image3</th>
+                          <th>Price in INR</th>
+                          <th>In stock</th>
+                          <th>List/Unlist</th>
+                          <th>Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+
+                      <% productData.forEach(function(product, index) { %>
+                          <tr>
+                              <td>
+                                  <%= product.productName %>
+                              </td>
+                              <td>
+                                  <%= product.parentCategory %>
+                              </td>
+                              <td><img src="/upload/<%= product.productImage1 %>" alt=""
+                                      style="width: 100px; height: 100px"></td>
+                              <td><img src="/upload/<%= product.productImage2 %>" alt=""
+                                      style="width: 100px; height: 100px"></td>
+                              <td><img src="/upload/<%= product.productImage3 %>" alt=""
+                                      style="width: 100px; height: 100px"></td>
+                              <td style="margin-bottom: 80px;">₹<%= product.productPrice %>
+                              </td>
+                              <td>
+                                  <%= product.productStock %>
+                              </td>
+
+                              <% if (product.isListed) { %>
+                                  <td>
+                                      <form action="/admin/unlist/<%= product._id %>" method="POST">
+                                          <button type="submit" class="btn btn-success" style="margin-bottom: 80px;">Unlist</button>
+                                      </form>
+                                  </td>
+                                  <% } else { %>
+                                      <td>
+                                          <form action="/admin/list/<%= product._id %>" method="POST">
+                                              <button type="submit" class="btn btn-danger" style="margin-bottom: 80px;">List</button>
+                                          </form>
+                                      </td>
+                                      <% } %>
+
+                                          <td>
+
+                                              <a href="/admin/productEdit/<%= product._id %>"
+                                                  class="btn btn-primary btn-sm rounded" style="margin-bottom: 80px;">edit
+                                              </a>
+
+
+                                              <a class="btn btn-info"
+                                                  onclick="return deleteConfirmation('<%= product.categoryName %>', '<%= product._id %>')"
+                                                  href="#" style="margin-bottom: 80px; margin-left: 17px;" >
+                                                  <i class="fa fa-trash" aria-hidden="true"></i>Delete
+                                              </a>
+
+                                              <script>
+                                                  function deleteConfirmation(categoryName, productId) {
+                                                      if (confirm(`Are you sure you want to delete ${categoryName} product?`)) {
+                                                          window.location.href = `/admin/deleteProduct/${productId}`;
+                                                          return true;
+                                                      }
+                                                      return false;
+                                                  }
+                                              </script>
+
+                                          </td>
+                          </tr>
+                          <% }); %>
+
+                  </tbody>
+              </table>
+
+          </div> <!-- card-body end// -->
+
+
+      </div> <!-- card end// -->
+
+      <div class="d-flex justify-content-center py-3">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+             
+              <% for( let i = 0; i < count/limit; i++ ) { %>
+              <li class="page-item">
+                <a class="page-link" href="/admin/products?page=<%=i+1 %>"><%= i+1 %></a>
+              </li>
+              <% } %>
+             
+            </ul>
+          
+        </div>
+      
+     
+  </section> <!-- content-main end// -->
+
+<script src="assets/js/vendors/jquery-3.6.0.min.js"></script>
+<script src="assets/js/vendors/bootstrap.bundle.min.js"></script>
+<script src="assets/js/vendors/select2.min.js"></script>
+<script src="assets/js/vendors/perfect-scrollbar.js"></script>
+<script src="assets/js/vendors/jquery.fullscreen.min.js"></script>
+<!-- Main Script -->
+<script src="assets/js/main.js" type="text/javascript"></script>
+</body>
+
+
+<!-- <%- include('../layouts/adminFooter.ejs') %> -->

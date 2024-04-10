@@ -1,0 +1,417 @@
+
+<%- include('../layouts/userHeader.ejs') %>
+
+
+<!-- HEADER FORM -->
+<div class="header-form-area bg-primary d-md-none">
+  <form class="header-form" action="#" method="">
+    <div class="input-group">
+      <input type="text" class="form-control py-0" required="" id="expire" placeholder="Search...">
+      <div class="input-group-append">
+        <button class="input-group-text border-0 btn bg-white" type="submit">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.16667 14.8333C11.8486 14.8333 14.8333 11.8486 14.8333 8.16667C14.8333 4.48477 11.8486 1.5 8.16667 1.5C4.48477 1.5 1.5 4.48477 1.5 8.16667C1.5 11.8486 4.48477 14.8333 8.16667 14.8333Z" stroke="#ccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16.5 16.5L12.875 12.875" stroke="#ccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>            
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+      <!-- LIGHT SECTION -->
+      <section class="lightSection clearfix pageHeader">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="page-title">
+                <h2> Product Details</Details></h2>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <ol class="breadcrumb pull-right">
+                <li>
+                  <a href='/'>Home</a>
+                </li>
+                <li class="active">Single Product</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MAIN CONTENT SECTION -->
+      <section class="mainContent clearfix">
+        <div class="container">
+          <div class="row singleProduct">
+            <div class="col-md-12">
+              <div class="media flex-wrap mb-5">
+                <div class="media-left productSlider">
+                  <div id="carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner SingleProductItem">
+                      <div class="video-icon">
+                        <a class="video-link" data-fancybox href="https://www.youtube.com/embed/g3-VxLQO7do?autoplay=1">
+                          <i class="fa fa-play play-icon" aria-hidden="true"></i>
+                        </a>
+                      </div>
+
+                      
+
+                      <div class="carousel-item SingleProductImage" data-thumb="1">
+                        <img src="assets/img/products/signle-product/product-slide-big-02.jpg">
+                        <a data-fancybox="images" href="assets/img/products/signle-product/product-slide-large-02.jpg" class="product-content">
+                          <div class="MaskingIcon"><i class="fa fa-plus"></i></div>
+                        </a>
+                      </div>
+
+                      <div class="carousel-item SingleProductImage" data-thumb="2">
+                        <img src="assets/img/products/signle-product/product-slide-big-03.jpg">
+                        <a data-fancybox="images" href="assets/img/products/signle-product/product-slide-large-03.jpg" class="product-content">
+                          <div class="MaskingIcon"><i class="fa fa-plus"></i></div>
+                        </a>
+                      </div>
+
+                      <div class="carousel-item SingleProductImage" data-thumb="3">
+                        <img src="assets/img/products/signle-product/product-slide-big-04.jpg">
+                        <a data-fancybox="images" href="assets/img/products/signle-product/product-slide-large-04.jpg" class="product-content">
+                          <div class="MaskingIcon"><i class="fa fa-plus"></i></div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- <div class="clearfix">
+                    <div id="thumbcarousel" class="carousel slide" data-interval="false">
+                      <div class="carousel-inner">
+                          <div data-bs-target="#carousel" data-bs-slide-to="0" class="thumb"><img src="assets/img/products/signle-product/product-slide-small-01.jpg"></div>
+                          <div data-bs-target="#carousel" data-bs-slide-to="1" class="thumb"><img src="assets/img/products/signle-product/product-slide-small-02.jpg"></div>
+                          <div data-bs-target="#carousel" data-bs-slide-to="2" class="thumb"><img src="assets/img/products/signle-product/product-slide-small-03.jpg"></div>
+                          <div data-bs-target="#carousel" data-bs-slide-to="3" class="thumb"><img src="assets/img/products/signle-product/product-slide-small-04.jpg"></div>
+                      </div>
+                      <a class="left carousel-control" href="#thumbcarousel" role="button" data-bs-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                      </a>
+                      <a class="right carousel-control" href="#thumbcarousel" role="button" data-bs-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                      </a>
+                    </div>
+                  </div> -->
+                  <div id="disp-img-thumbnails" class="product-image-gallery" >
+                    <a class="product-gallery-item active" href="#"
+                        data-image="/upload/<%= currentProduct.productImage1 %>"
+                        data-zoom-image="/upload/<%= currentProduct.productImage1 %>"
+                        onclick="changeImg(this)">
+                        <img src="/upload/<%= currentProduct.productImage1 %>"
+                            alt="product side">
+                    </a>
+
+                    <a class="product-gallery-item" href="#"
+                        data-image="/upload/<%= currentProduct.productImage2 %>"
+                        data-zoom-image="/upload/<%= currentProduct.productImage2 %>"
+                        onclick="changeImg(this)">
+                        <img src="/upload/<%= currentProduct.productImage2 %>"
+                            alt="product cross">
+                    </a>
+                    <a class="product-gallery-item" href="#"
+                        data-image="/upload/<%= currentProduct.productImage3 %>"
+                        data-zoom-image="/upload/<%= currentProduct.productImage3 %>"
+                        onclick="changeImg(this)">
+                        <img src="/upload/<%= currentProduct.productImage3 %>"
+                            alt="product with model">
+                    </a>
+                  
+                  
+                  
+                
+
+                </div><!-- End .product-image-gallery -->
+                </div>
+                <div class="media-body">
+                  <ul class="list-inline">
+                    <li class="mb-4 mb-md-0">
+                      <a href='/productCategory'><i class="fa fa-reply" aria-hidden="true"></i>
+                        Continue Shopping
+                      </a>
+                    </li>
+
+                    
+                  </ul>
+
+                  <h2> <%= currentProduct.productName %></h2>
+                  <h3>$<%= currentProduct.productPrice %></h3>
+                  <p>Mauris lobortis augue ex, ut faucibus nisi mollis ac. Sed volutpat scelerisque ex ut ullamcorper. Cras at velit quis sapien dapibus laoreet a id odio. Sed sit amet accumsan ante, eu congue metus. Aenean eros tortor, cursus quis feugiat sed vestibulum.</p>
+                  <div class="row">
+                   
+
+
+                    <div class="col-12">
+                      <div class="d-flex align-items-center mb-5 pt-3">
+                        <div class="SingleCartListInner cartListInner ps-1">
+                              <h3>Currently Available Stocks : <%= currentProduct.productStock %></h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                 
+                  
+
+                 <form action="/addto-cart/<%=currentProduct._id%>" method="post">
+                  <div class="btn-area mb-0" >
+                    <button style="margin-bottom: 20px; font-size: medium;" type="submit" class="btn btn-primary">Add to cart</button>
+                  </div>
+                </form>
+                <form action="/wishList/<%= currentProduct._id %>" >
+                  <div class="btn-area mb-0">
+                    <button style="margin-bottom: 20px; font-size: medium; width: fit-content;" type="submit" class="btn btn-primary">Add to  Wishlist</button>
+                  </div>
+                </form>
+
+                  <div class="tabArea d-none">
+                   
+                    <div class="tab-content">
+                      <div id="details" class="tab-pane fade show active">
+                        <p>LContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin liter ature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia.</p>
+                        <ul class="list-unstyled">
+                          <li>Black, Crew Neck</li>
+                          <li>75% Cotton, 25% Rayon</li>
+                          <li>Waterbased Ink</li>
+                          <li>Wash Cold, dry low</li>
+                        </ul>
+                      </div>
+                      <div id="about-art" class="tab-pane fade">
+                        <p>Nulla facilisi. Mauris efficitur, massa et iaculis accumsan, mauris velit ultrices purus, quis condimentum nibh dolor ut tortor. Donec egestas tortor quis mattis gravida. Ut efficitur elit vitae dignissim volutpat. </p>
+                      </div>
+                      <div id="sizing" class="tab-pane fade">
+                        <p>Praesent dui felis, gravida a auctor at, facilisis commodo ipsum. Cras eu faucibus justo. Nullam varius cursus nisi, sed elementum sem sagittis at. Nulla tellus massa, vestibulum a commodo facilisis, pulvinar convallis nunc.</p>
+                      </div>
+                      <div id="shipping" class="tab-pane fade">
+                        <p>Mauris lobortis augue ex, ut faucibus nisi mollis ac. Sed volutpat scelerisque ex ut ullamcorper. Cras at velit quis sapien dapibus laoreet a id odio. Sed sit amet accumsan ante, eu congue metus. Aenean eros tortor, cursus quis feugiat sed, vestibulum vel purus.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row singleProduct singleProductTab">
+            <div class="col-12">
+              <div class="media mb-4">
+                <div class="media-body">
+                  <div class="tabArea">
+                    <ul class="nav nav-tabs bar-tabs">
+                      <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#OurDetails">Details</a></li>
+                   
+                    </ul>
+                    <div class="tab-content">
+                      <div id="OurDetails" class="tab-pane fade show active">
+                        <p>LContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
+                          Latin
+                          liter ature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at
+                          Hampden-Sydney
+                          College in Virginia.</p>
+                        <ul class="list-unstyled">
+                          <li>Black, Crew Neck</li>
+                          <li>75% Cotton, 25% Rayon</li>
+                          <li>Waterbased Ink</li>
+                          <li>Wash Cold, dry low</li>
+                        </ul>
+                      </div>
+
+                     
+
+                      <div id="Reviews" class="tab-pane fade">
+                        <div class="media mb-5">
+                          <img class="me-4 rounded rounded-circle" src="assets/img/blog/blog-small2-01.jpg" alt="Generic placeholder image">
+                          <div class="media-body">
+                            <h4 class="mt-0 mb-2">Lorem ipsum dolor</h4>
+
+                            <ul class="text-warning d-flex mb-1">
+                              <li class="me-1"><i class="fa fa-star" aria-hidden="true"></i></li>
+                              <li class="me-1"><i class="fa fa-star" aria-hidden="true"></i></li>
+                              <li class="me-1"><i class="fa fa-star" aria-hidden="true"></i></li>
+                              <li class="me-1"><i class="fa fa-star" aria-hidden="true"></i></li>
+                              <li class=""><i class="fas fa-star-half-alt" aria-hidden="true"></i></li>
+                            </ul>
+
+                            <p class="mt-0 mb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio dolorum quasi magni mollitia suscipit blanditiis nihil id autem? Voluptates, minima expedita doloremque amet consequuntur quam aliquid repellat architecto accusamus fuga.</p>
+                            <h6 class="mt-0"><em>Rodney Artichoke</em></h6>
+                          </div>
+                        </div>
+
+                        <div class="media mb-5">
+                          <img class="me-4 rounded rounded-circle" src="assets/img/blog/blog-small-02.jpg" alt="Generic placeholder image">
+                          <div class="media-body">
+                            <h4 class="mt-0 mb-2">Feugiat primis</h4>
+
+                            <ul class="text-warning d-flex mb-1">
+                              <li class="me-1"><i class="fa fa-star" aria-hidden="true"></i></li>
+                              <li class="me-1"><i class="fa fa-star" aria-hidden="true"></i></li>
+                              <li class="me-1"><i class="fa fa-star" aria-hidden="true"></i></li>
+                              <li class="me-1"><i class="fa fa-star" aria-hidden="true"></i></li>
+                              <li class=""><i class="far fa-star" aria-hidden="true"></i></li>
+                            </ul>
+
+                            <p class="mt-0 mb-3">Feugiat primis reprehenderit proident cumque nec diam eligendi, qui iure, torquent quod sequi, taciti! Tempus leo
+                            architecto accusantium cillum, taciti nascetur? Iusto facilisi dolores adipisci eros fuga, laoreet culpa molestie, arcu
+                            lectus felis sunt accusantium alias mollitia eius anim eget. voluptatibus facilisi.</p>
+                            <h6 class="mt-0"><em>Samanta Doe</em></h6>
+                          </div>
+                        </div>
+
+                        <div class="media mb-0">
+                          <img class="me-4 rounded rounded-circle" src="assets/img/blog/blog-small-03.jpg" alt="Generic placeholder image">
+                          <div class="media-body">
+                            <h4 class="mt-0 mb-2">Auctor vitae egestas</h4>
+
+                            <ul class="text-warning d-flex mb-1">
+                              <li class="me-1"><i class="fa fa-star" aria-hidden="true"></i></li>
+                              <li class="me-1"><i class="fa fa-star" aria-hidden="true"></i></li>
+                              <li class="me-1"><i class="fa fa-star" aria-hidden="true"></i></li>
+                              <li class="me-1"><i class="fa fa-star" aria-hidden="true"></i></li>
+                              <li class=""><i class="fa fa-star" aria-hidden="true"></i></li>
+                            </ul>
+
+                            <p class="mt-0 mb-2">Auctor vitae egestas et. Accumsan quis nunc. Duis leo justo. Condimentum at purus eu. Amana sed dolor sem. Etiam massa
+                            libero. massa libero, auctor vitae egestas et, accumsan quis nunc. Dous leou justi, condimentam at purus eus actor.
+                            Auctor vitae egestas et duis Condimentum at purus eu. Aemean sed dolor sem. Etiam massa libero.</p>
+                            <h6 class="mt-0"><em>Amanda Smith</em></h6>
+                          </div>
+                        </div>
+
+                        <div class="mt-5 mb-2 border p-4 p-md-5">
+                          <form>
+                            <div class="media flex-column flex-md-row mb-0">
+                              <img class="m-auto m-md-0 me-md-4 rounded rounded-circle" src="assets/img/blog/profile-image.jpg" alt="Generic placeholder image">
+                              
+                              <div class="media-body mt-4 mt-md-0">
+                                <h6 class="text-center text-md-start text-capitalize mt-0"><em>Rodney samp</em></h6>
+                                <h6 class="text-center text-md-start ReviewsPost mt-0">Posting publicly</h6>
+                            
+                                <div class="rating-view mb-4">
+                                  <span class="add-rating-large ps-0 m-auto m-md-0"></span>
+                                </div>
+
+                                <div class="row">
+                                  <div class="form-group col-md-12">
+                                    <input type="text" class="form-control" id="exampleInputPhone" placeholder="Subject" required="">
+                                  </div>
+
+                                  <div class="form-group col-md-12">
+                                    <textarea class="form-control" rows="5" placeholder="Review"></textarea>
+                                  </div>
+                                </div>
+
+                                <div class="text-center text-md-start">
+                                  <button type="submit" class="btn btn-default btn-primary custom-btn">Submit Review</button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+
+                      <div id="OurShipping" class="tab-pane fade">
+                        <div class="SingleCartListWrapper SingleCartShipping">
+                          <div class="cartListInner">
+                            <div class="table-responsive">
+                              <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th>Shipping method</th>
+                                    <th>Estimated Time</th>
+                                    <th>Fees</th>
+                                  </tr>
+                                </thead>
+
+                                <tbody>
+                                  <tr>
+                                    <td class="">
+                                      <div class="form-check ps-0 mb-0">
+                                        <input id="radio-1" class="radio-custom form-check-input" name="radio-group" type="radio" checked="">
+                                        <label for="radio-1" class="form-check-label radio-custom-label media align-items-center mb-0">
+                                          <div class="media-body">
+                                            Pickup from store
+                                          </div>
+                                        </label>
+                                      </div>
+                                    </td>
+                                  
+                                    <td class="">—</td>
+                                    <td class="">$0</td>
+                                  </tr>
+
+                                  <tr>
+                                    <td class="">
+                                      <div class="form-check ps-0 mb-0">
+                                        <input id="radio-2" class="radio-custom form-check-input" name="radio-group" type="radio">
+                                        <label for="radio-2" class="form-check-label radio-custom-label media align-items-center mb-0">
+                                          <div class="media-body">
+                                            Local Shipping
+                                          </div>
+                                        </label>
+                                      </div>
+                                    </td>
+                                  
+                                    <td class="">2-7 days</td>
+                                    <td class="">$4</td>
+                                  </tr>
+
+                                  <tr>
+                                    <td class="">
+                                      <div class="form-check ps-0 mb-0">
+                                        <input id="radio-3" class="radio-custom form-check-input" name="radio-group" type="radio">
+                                        <label for="radio-3" class="form-check-label radio-custom-label media align-items-center mb-0">
+                                          <div class="media-body">
+                                            Courier
+                                          </div>
+                                        </label>
+                                      </div>
+                                    </td>
+
+                                    <td class="">3-5 days</td>
+                                    <td class="">$5</td>
+                                  </tr>
+                      
+                                  <tr>
+                                    <td class="">
+                                      <div class="form-check ps-0 mb-0">
+                                        <input id="radio-4" class="radio-custom form-check-input" name="radio-group" type="radio">
+                                        <label for="radio-4" class="form-check-label radio-custom-label media align-items-center mb-0">
+                                          <div class="media-body">
+                                            International Shipping
+                                          </div>
+                                        </label>
+                                      </div>
+                                    </td>
+                                    
+                                    <td class="">7-15 days</td>
+                                    <td class="">$15</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <%- include('../layouts/userFooter.ejs') %>
+
+<style>
+  img:hover{
+    transform: scale(1.4);
+  }
+</style>
+
+
+

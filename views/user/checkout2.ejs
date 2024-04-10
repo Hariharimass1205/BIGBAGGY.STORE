@@ -1,0 +1,15 @@
+<%- include('../layouts/userHeader.ejs') %>
+    <div class="row" style="padding-top: 300px;">
+        <div class="col-lg-12">
+            <div class="row userInfo">
+                <div class="thanxContent text-center">
+                    <h1>
+                        Thank you for your order
+                        <h1 ><a style="color: black;" href="/account/orderList/orderStatus/<%= orderData._id %>">#<%= orderData.orderNumber %></a></h1>
+                    </h1>
+                    <h4 style="font-weight: 200;">we'll let you know when your items are on their way</h4>
+                    <a  href="/"><button style="margin: 30px;" type="button" class="btn btn-primary btn-lg">SHOP MORE </button></a>
+                </div>
+            </div>
+        </div>
+    </div>

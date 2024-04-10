@@ -1,0 +1,131 @@
+<%- include('../layouts/adminHeader.ejs') %>
+
+
+<main class="main-wrap">
+    <header class="main-header navbar">
+        <div class="col-search">
+            <form class="searchform">
+                <div class="input-group">
+                
+                    
+                </div>
+                <datalist id="search_terms">
+                    <option value="Products">
+                    <option value="New orders">
+                    <option value="Apple iphone">
+                    <option value="Ahmed Hassan">
+                </datalist>
+            </form>
+        </div>
+        <div>
+            <a href="/admin" class="btn btn-primary">Logout</a>
+          </div>
+    </header>
+    <section class="content-main">
+        <div class="row">
+            <div class="col-9">
+                <div class="content-header">
+                    <h2 class="content-title">Add New Product</h2>
+                    
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4>Basic</h4>
+                    </div>
+                    <div class="card-body">
+                        
+                        <form action="/admin/addproduct" method="POST" enctype="multipart/form-data">
+                            <div class="modal-body">
+                                <div class="input-group mb-3">
+                                    <input name="productName" id="productName" type="name" class="form-control"
+                                        placeholder="Product Name" required />
+                                </div>
+
+                                <div class="input-group mb-3">
+                                   
+                                    <label class="container">
+                                        <span>Select Parent Category</span>
+                                        <select name="parentCategory" class="form-select"
+                                            aria-label="Default select example">
+                                            <% categories.forEach((value)=>{ %>
+                                                <option value="<%=value.categoryName%>">
+                                                    <%= value.categoryName %>
+                                                </option>
+                                                <% }) %>
+                                        </select>
+                                    </label>
+                                </div>
+
+                                <div id="img-container" class="input-group mb-3">
+                                    <img id="preview1" src="" style="width: 500px; height: 500px; display: none"
+                                        alt="Img" />
+                                    <img id="croppedImg1" src="" style="width: 500px; height: 500px; display: none"
+                                        alt="Img" />
+                                    <div class="input-group mb-3">
+                                        <input id="input-img1" name="productImage1" type="file" class="form-control"
+                                            placeholder="Product Image1" onchange="displayImage1(event)" required />
+                                    </div>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <img id="preview2" src="" style="width: 500px; height: 500px; display: none"
+                                        alt="Img" />
+                                    <img id="croppedImg2" src="" style="width: 500px; height: 500px; display: none"
+                                        alt="Img" />
+                                    <div class="input-group mb-3">
+                                        <input id="input-img2" name="productImage2" type="file"
+                                            class="form-control" placeholder="Product Image2"
+                                            onchange="displayImage2(event)" required />
+                                    </div>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <img id="preview3" src="" style="width: 500px; height: 500px; display: none"
+                                    alt="Img" />
+                                <img id="croppedImg3" src="" style="width: 500px; height: 500px; display: none"
+                                    alt="Img" />
+                                    <div class="input-group mb-3">
+                                        <input id="input-img3" name="productImage3" type="file"
+                                            class="form-control" placeholder="Product Image3"
+                                            onchange="displayImage3(event)" required />
+                                    </div>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <input name="productPrice" type="tel" class="form-control"
+                                        placeholder="Product Price" required />
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input name="productStock" type="tel" class="form-control"
+                                        placeholder="Product Stock" required />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-info">Save changes</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <!-- card end// -->
+            </div>
+        </div>
+    </section>
+    <!-- content-main end// -->
+  
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css"
+        integrity="sha512-hvNR0F/e2J7zPPfLC9auFe3/SE0yG4aJCOd/qxew74NN7eyiSKjr7xJJMu1Jy2wf7FXITpWS1E/RY8yzuXN7VA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"
+        integrity="sha512-9KkIqdfN7ipEW6B6k+Aq20PV31bjODg4AA52W+tYtAE0jE0kMx49bjJ3FgvS56wzmyfMUHbQ4Km2b7l9+Y/+Eg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    
+<%- include('../layouts/adminFooter.ejs') %>

@@ -1,0 +1,190 @@
+<%- include('../layouts/userHeader.ejs') %>
+
+<div class="container">
+    <section class="lightSection clearfix pageHeader">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="page-title">
+                <h2>Your Order Details</h2>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <ol class="breadcrumb">
+                <li>
+                  <a href='/orders'>Order List</a>
+                </li>
+                <li>
+                  <a href="/cart">cart</a>
+                </li>
+                <li class="active"></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Order Status Section -->
+            <div style="margin-top: 20px;"  class="order-status">
+                <h3>Order Status: <%= orderData.orderStatus %></h3>
+                <p style="margin-top: 20px;"><strong>Order Date:</strong> <%= orderData.orderDate.toLocaleString() %></p>
+                <p><strong>Order Number:</strong> #<%= orderData.orderNumber %></p>
+                <% if (orderData.orderStatus === "Cancelled") { %>
+                    <div class="alert alert-danger" role="alert">This order has been cancelled.</div>
+                <% } else if (orderData.orderStatus === "Delivered") { %>
+                    <div class="alert alert-success" role="alert">This order has been delivered.</div>
+                <% } else if (orderData.orderStatus === "Return") { %>
+                    <div class="alert alert-warning" role="alert">This order has been returned.</div>
+                <% } %>
+
+                <% if (orderData.orderStatus === "Delivered" || orderData.orderStatus === "Return") { %>
+                    <% if (!isReturn) { %>
+                        <div class="return-form">
+                            <h4>Return Order</h4>
+                            <input type="text" class="form-control" id="ReturnReason" placeholder="Reason for return">
+                            <button class="btn btn-warning" onclick="returnorderConfirmation('<%= orderData._id %>')">RETURN</button>
+                        </div>
+                    <% } %>
+                <% } else { %>
+                    <% if (!isCancelled) { %>
+                        <div class="cancel-form">
+                            <h4>Cancel Order</h4>
+                            <input type="text" class="form-control" id="cancelReason" placeholder="Reason for cancellation">
+                            <button class="btn btn-danger" onclick="cancelOrder('<%= orderData._id %>')">CANCEL ORDER</button>
+                        </div>
+                    <% } %>
+                <% } %>
+                <div id="cancelBtn" class="btn btn-info" style="margin-top: 20px; color:white">
+                    <a href="/account/orderList/orderStatus/downloadInvoice/<%= orderData._id %>">Download Invoice</a>
+                </div>
+            </div>
+
+            <!-- Order Items Section -->
+            <div class="order-items">
+                <h3>Order Items</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr style="font-size: 20px;">
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th >Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% orderData.cartData.forEach(function(cartItem) { %>
+                                <tr style="font-size: larger; font-weight: 900;">
+                                    <td >
+                                        <img style="height: 80px; width: 80px;" src="/upload/<%= cartItem.productId.productImage1 %>" alt="<%= cartItem.productId.productName %>" class="img-thumbnail">
+                                        <h3><%= cartItem.productId.productName %></h3>
+                                    </td>
+                                    <td ><%= cartItem.productQuantity %></td>
+                                    <td>₹<%= cartItem.totalCostPerProduct %></td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <!-- Payment Method Section -->
+            <div class="payment-method">
+                <h3>Payment Method</h3>
+                <p><strong>Method:</strong> <%= orderData.paymentType %></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="pager">
+                <li class="previous pull-right"><a href="/home"><i class="fa fa-home"></i> Go to Shop</a></li>
+                <li class="next pull-left"><a href="/account">← Back to My Account</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script>
+        async function cancelOrder(orderId) {
+    let cancelBtnElement = document.getElementById('cancelBtn');
+    let reason = document.getElementById('cancelReason').value;
+
+    let cancelledBtnElement = document.getElementById('597a5bdf082df5a383c94b');
+    
+    // Your Swal.fire confirmation dialog
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Cancel the order"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch('/account/orderList/orderStatus/cancelOrder/' + orderId, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ cancelReason: reason }),
+            }).then(() => {
+                location.reload();
+            }).catch(error => console.error('Error:', error));
+            
+            cancelBtnElement.style.display = 'none';
+            cancelledBtnElement.style.display = 'block';
+        }
+    });
+}
+
+async function returnorderConfirmation(orderId) {
+    let reason = document.getElementById('ReturnReason').value;
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, return the order"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch('/account/orderList/orderStatus/returnorder/' + orderId, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ReturnReason: reason }),
+            }).then(() => {
+                location.reload();
+            }).catch(error => console.error('Error:', error));
+
+            let cancelBtnElement = document.getElementById('cancelBtn');
+            let returnedBtnElement = document.getElementById('returnedBtn');
+            cancelBtnElement.style.display = 'none';
+            returnedBtnElement.style.display = 'block';
+        }
+    });
+}
+
+
+
+
+
+    </script>
+
+<%- include('../layouts/userFooter.ejs') %>
+
+

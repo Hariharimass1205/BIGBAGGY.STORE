@@ -1,0 +1,150 @@
+<%- include('../layouts/userHeader.ejs') %>
+
+<style>
+
+  ul{
+    display: flex;
+    list-style: none;
+  }
+  li{
+    display: inline;
+  }
+  
+</style>
+
+<!-- HEADER FORM -->
+ 
+
+
+
+
+      <!-- LIGHT SECTION -->
+      <section class="lightSection clearfix pageHeader">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="page-title">
+                <h2>ALL ORDERS</h2>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <ol class="breadcrumb float-right">
+                <li>
+                  <a href='/'>Home</a>
+                </li>
+                <li class="active">ALL ORDERS</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MAIN CONTENT SECTION -->
+      <section class="mainContent clearfix userProfile">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="btn-group me-0" role="group" aria-label="...">
+                <a class='btn btn-default' href='/profile'><i class="fa fa-user" aria-hidden="true"></i>Profile</a>
+                <a class='btn btn-default' href='/address'><i class="fas fa-map-marker-alt" aria-hidden="true"></i>My Address</a>
+                <a class='btn btn-default' href='/cart'><i class="fas fa-map-marker-alt" aria-hidden="true"></i>Cart</a>
+                <a href="javascript:void(0)" class="btn btn-default active"><i class="fa fa-list" aria-hidden="true"></i>All Orders</a>
+                <a class='btn btn-default' href='/wishlist'><i class="fa fa-gift" aria-hidden="true"></i>Wishlist</a>
+
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+          <% if (orderData.length) { %>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>No. of items</th>
+                        <th>Payment Method</th>
+                        <th>Price</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>View status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% orderData.forEach(order => { %>
+                        <tr>
+                            <td>#<%= order.orderNumber %></td>
+                            <td><%= order.cartData.length %> <small>item(s)</small></td>
+                            <td><%= order.paymentType %></td>
+                            <td>₹<%= order.grandTotalCost %></td>
+                            <td><%= order.orderDateFormatted %></td>
+                            <td><span class="label label-primary"><%= order.orderStatus %></span></td>
+                            <td><a href="/orderStatus/<%= order._id %>" class="btn btn-primary btn-sm">Order Status</a></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+            </div>
+        <% } else { %>
+            <h1 style="color: brown;">No orders placed yet!</h1>
+        <% } %>
+        <ul>
+
+        </div>
+        
+        <ul style="display: flex; justify-content: center;">
+          <% for( let i = 0; i < count/limit; i++ ) { %>
+          <li class="page-item">
+            <a class="page-link" href="/orders?page=<%=i+1 %>"><%= i+1 %></a>
+          </li>
+          <% } %>
+          
+        </ul>
+      </section>
+      <style>
+        /* Existing Styles */
+        ul {
+          display: flex;
+          list-style: none;
+          padding-left: 0; /* Remove padding */
+          justify-content: center; /* Center the pagination */
+          flex-wrap: wrap; /* Ensure items can wrap on small screens */
+        }
+        li {
+          display: inline;
+          margin: 5px; /* Add some space around pagination links */
+        }
+      
+        /* Responsive Table */
+        .table-responsive {
+          display: block;
+          width: 100%;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+      
+        /* Adjustments for smaller screens */
+        @media (max-width: 768px) {
+          .btn-group {
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically */
+            width: 100%;
+          }
+          .btn-group .btn {
+            margin-bottom: 5px; /* Add space between buttons */
+          }
+          /* Make form input and button full width */
+          .header-form .form-control,
+          .header-form .btn {
+            width: 100%;
+          }
+          .breadcrumb {
+            padding-left: 0;
+            margin-top: 10px; /* Add some space above breadcrumb on small screens */
+          }
+        }
+      </style>
+      
+
+
+<%- include('../layouts/userFooter.ejs') %>
+
+

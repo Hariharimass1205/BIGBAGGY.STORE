@@ -1,0 +1,134 @@
+<%- include('../layouts/adminHeader.ejs') %>
+
+
+<main class="main-wrap">
+    <header class="main-header navbar">
+        <div class="col-search">
+            
+        </div>
+        <div>
+            <a href="/admin" class="btn btn-primary">Logout</a>
+          </div>
+    </header>
+    <section class="content-main">
+        <div class="row">
+            <div class="col-9">
+                <div class="content-header">
+                    <h2 class="content-title">USER MANAGEMENT</h2>
+                    
+                </div>
+            </div>
+
+            <div class="table-responsive content p-3">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">First-Name</th>
+                      <th scope="col">Last-Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% users.forEach((user,i) => { %>
+          
+                    <tr id="<%= user._id %>">
+                      <th scope="row"><%= i+1 %></th>
+                      <td><%= user.fname %></td>
+                      <td><%= user.lname %></td>
+                      <td><%= user.email %></td>
+                      <% if(user.isBlocked){ %>
+                      <td>
+                        <span onclick="block('<%= user._id %>')"><a href="/admin/unblock-user/<%= user._id %>" class="btn btn-danger"
+                          >Blocked</a
+                        ></span>
+                      </td>
+                      <% }else{ %>
+                      <td>
+                        <span onclick="unblock('<%= user._id %>')"><a href="/admin/block-user/<%= user._id %>" class="btn btn-success"
+                          >Unblocked</a
+                        ></span>
+                      </td>
+                      <% } %>
+                    
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+        <div class="d-flex justify-content-center py-3">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+             
+              <% for( let i = 0; i < count/limit; i++ ) { %>
+              <li class="page-item">
+                <a class="page-link" href="/admin/userManagement?page=<%=i+1 %>"><%= i+1 %></a>
+              </li>
+              <% } %>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    </section>
+<script>
+  
+  function block(data){
+  Swal.fire({
+      title: "Are you sure?",
+      text: "You can be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "unblock the User"
+  }).then((result) => {
+      if (result.isConfirmed) {
+          fetch('/admin/unblock-user/' + data, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              }
+          }).then(() => {
+             
+              location.reload();
+          }).catch(error => console.error('Error:', error));
+          
+          cancelBtnElement.style.display = 'none';
+          cancelledBtnElement.style.display = 'block';
+      }
+  });
+
+}
+
+function unblock(data){
+  Swal.fire({
+      title: "Are you sure?",
+      text: "You can be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "block the User"
+  }).then((result) => {
+      if (result.isConfirmed) {
+          fetch('/admin/block-user/' + data, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              }
+          }).then(() => {
+             
+              location.reload();
+          }).catch(error => console.error('Error:', error));
+          
+          cancelBtnElement.style.display = 'none';
+          cancelledBtnElement.style.display = 'block';
+      }
+  });
+
+}
+</script>
+
+
+<%- include('../layouts/adminFooter.ejs') %>

@@ -1,0 +1,165 @@
+<%- include('../layouts/userHeader.ejs') %>
+
+
+    <section class="lightSection clearfix pageHeader">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="page-title">
+                <h2>log in</h2>
+              </div>
+            </div>
+            <div class="col-md-6">
+            </div>
+          </div>
+        </div>
+      </section>
+
+ 
+      <section class="mainContent clearfix logIn">
+        <div class="container">
+            <div class="row justify-content-center">
+                
+      <div class="col-lg-9 col-md-9 col-sm-7" style="justify-content: center;">
+
+
+        <div class="col-lg-9 col-md-9 col-sm-7">
+          <h1  style="margin-bottom: 20px; justify-content: center;"><span><i class="glyphicon glyphicon-user"></i> Change your password</span>
+          </h1>
+
+          <div class="row userInfo">
+
+            <div class="col-xs-12 col-sm-6">
+              <!-- <h2 class="block-title-2"> Please be enter new password, if it has to be changed. </h2> -->
+
+              <form id="passwordChangeForm" role="form" class="regForm">
+                <div class="form-group">
+                  <label>New Password</label>
+                  <input required id="newPassword" minlength="5" maxlength="12"
+                    title="Please enter your new password, between 5 and 12 characters" type="tel" class="form-control"
+                    placeholder="Password" onkeyup="checkPasswordStrength();">
+                </div>
+                <div id="password-strength-status"></div>
+                <div class="form-group">
+                  <label>Confirm New Password</label>
+                  <input required minlength="5" title="Passwords doesn't match" id="confirmNewPassword" type="password"
+                    class="form-control" placeholder="Confirm Password" name="confirmPassword"
+                    data-rule-equalTo="#password">
+                </div>
+                <div class="form-group">
+                  <label>Current Password</label>
+                  <input name="currentPassword" id="currentPassword" type="password" class="form-control"
+                    placeholder="Enter your current password" >
+                </div>
+                <button id="verifyOTP" type="submit" class="btn btn-primary"> Change Password
+                </button>
+              </form>
+            </div>
+          </div>
+          <!--/row end-->
+
+        </div>
+      </div>
+      </div>
+        </div>
+      </section>
+      <%- include('../layouts/userFooter.ejs') %>
+    
+
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery/jquery-2.1.3.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <!-- include  parallax plugin -->
+    <script type="text/javascript" src="assets/js/jquery.parallax-1.1.js"></script>
+
+    <!-- optionally include helper plugins -->
+    <script type="text/javascript" src="assets/js/helper-plugins/jquery.mousewheel.min.js"></script>
+
+    <!-- include mCustomScrollbar plugin //Custom Scrollbar  -->
+
+    <script type="text/javascript" src="assets/js/jquery.mCustomScrollbar.js"></script>
+
+    <!-- include icheck plugin // customized checkboxes and radio buttons   -->
+    <script type="text/javascript" src="assets/plugins/icheck-1.x/icheck.min.js"></script>
+
+    <!-- include grid.js // for equal Div height  -->
+    <script src="assets/plugins/jquery-match-height-master/dist/jquery.matchHeight-min.js"></script>
+    <script src="assets/js/grids.js"></script>
+
+    <!-- include carousel slider plugin  -->
+    <script src="assets/js/owl.carousel.min.js"></script>
+
+    <!-- jQuery select2 // custom select   -->
+    <script src="../../../../cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+
+    <!-- include touchspin.js // touch friendly input spinner component   -->
+    <script src="assets/js/bootstrap.touchspin.js"></script>
+
+    <!-- include validate.js // jquery plugin   -->
+    <script src="assets/js/jquery.validate.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script>
+      $().ready(function () {
+        // validate the comment form when it is submitted
+        $("#passwordChangeForm").validate();
+      });
+    </script>
+
+  
+
+
+<script>
+    async function changePassword() {
+        try {
+            const newPassword= document.getElementById('newPassword').value
+            const currentPassword= document.getElementById('currentPassword').value
+            
+            let formData = { newPassword, currentPassword  }
+
+            const response = await fetch('/changePassword', {
+                 method: 'PATCH',
+                 headers: {  'Content-Type': 'application/json' },
+                  body: JSON.stringify(formData)
+                });
+            let data = await response.json();
+
+            if (data.success) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Your new password has been successfully changed",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                .then(() => window.location.href = '/login');
+            }else if(data.invalidPassword){
+                Swal.fire({
+                    icon: "error",
+                    title: "Your current password is invalid",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then()
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    document.getElementById('passwordChangeForm').addEventListener('submit', function (e) {
+        console.log('vannu')
+        e.preventDefault();
+        changePassword();
+    });
+</script>
+
+
+    <!-- include custom script for site  -->
+    <script src="assets/js/script.js"></script>
+</body>
+
+<!-- Mirrored from templatecycle.com/tshop/v6/gray/account-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 09 Dec 2023 06:52:06 GMT -->
+
+</html>
+
+

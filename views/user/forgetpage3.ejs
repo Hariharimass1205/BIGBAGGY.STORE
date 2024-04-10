@@ -1,0 +1,31 @@
+<%- include('../layouts/userHeader.ejs') %>
+
+<div  class="container main-container headerOffset">
+    <div class="row" style="padding-top: 100px; padding-left: 200px; padding-bottom: 80px;">
+        <div class="col-lg-9 col-md-9 col-sm-7">
+            <h1 class="section-title-inner"><span>  </i> CREATE YOUR NEW PASSWORD </span></h1>
+            <div class="row userInfo">
+                <div class="col-xs-12 col-sm-12">
+                    <form role="form" action="/forget4 " method="post">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1"> </label>
+                            <input type="password" name="NewPassword" class="form-control" id="exampleInputEmail1" placeholder="NEW PASSWORD">
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-unlock"> </i> SUBMIT
+                        </button>
+                    </form>
+                    <div class="clear clearfix">
+                    </div>
+                </div>
+            </div>
+            <!--/row end-->
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-5"></div>
+    </div>
+    <!--/row-->
+    <div style="clear:both"></div>
+</div>
+<!-- /wrapper -->
+<div class="gap"></div>
+
+<%- include('../layouts/userFooter.ejs') %>

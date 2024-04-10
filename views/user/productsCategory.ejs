@@ -1,0 +1,213 @@
+<%- include('../layouts/userHeader.ejs') %>
+<!-- HEADER FORM -->
+
+
+
+
+      <!-- LIGHT SECTION -->
+      <section class="lightSection clearfix pageHeader">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="page-title">
+                <h2>SHOP CATEGORY</h2>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <ol class="breadcrumb float-end">
+                <li>
+                  <a href='/'>Home</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)">shop</a>
+                </li>   
+                    </li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MAIN CONTENT SECTION -->
+      <section class="mainContent clearfix productsContent">
+        <div class="container">
+          <div class="row">
+            <div class="header-search">
+              <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
+              <form action="/search" method="Post">
+                  <div class="header-search-wrapper">
+                      <label for="q" class="sr-only">Search</label>
+                      <input type="search" class="form-control" name="search" id="search"
+                          placeholder="Search here..." required>
+                  </div><!-- End .header-search-wrapper -->
+              </form>
+          </div>
+          
+            <div class="col-lg-3 col-md-4 sideBar">
+              <div class="accordion filter-accordion" id="accordionExample">
+                <div class="accordion-item panel">
+                  <h2 class="accordion-header panel-heading d-md-none" id="headingTwo">
+                    <div class="collapsed filter-button position-relative" role='button' data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      All filters <span class="position-absolute end-0"><i class="fa fa-angle-down"></i></span>
+                    </div>
+                  </h2>
+
+                  <div id="collapseTwo" class="accordion-collapse collapse d-md-block" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body px-0 pb-0 pt-md-0">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">Product categories</div>
+                        <div class="panel-body">
+                          <div class="collapse navbar-collapse navbar-ex1-collapse navbar-side-collapse">
+                            <ul class="nav navbar-nav side-nav" id="accordion2" role="tablist" aria-multiselectable="true">
+                              <li>
+                                <div class="" role="tab" id="heading1">
+                                  <a href="/filterCategory?categoriesName=Women">Women </a>
+                                </div>
+                                <li><a href="javascript:void(0)"></a></li>
+                                <li><a href="javascript:void(0)"></a></li>
+                              </li>
+                              <li>
+                                <div class="" role="tab" id="heading2">
+                                  <a href="/filterCategory?categoriesName=Men" >Men </a>
+                              </li>
+                              <li><a href="javascript:void(0)"></a></li>
+                              <li><a href="javascript:void(0)"></a></li>
+                              <li>
+                                <div class="" role="tab" id="heading3">
+                                  <a href="/filterCategory?categoriesName=Kids" >Kids</a>
+                                </div>
+                                <li><a href="javascript:void(0)"></a></li>
+                                <li><a href="javascript:void(0)"></a></li> 
+                              </li>
+                              <li>
+                                <div class="" role="tab" id="heading4">
+                                  <a href="/filterCategory?categoriesName=Accessories" >Accessories </a>
+                                </div>
+                                <li><a href="javascript:void(0)"></a></li>
+                                <li><a href="javascript:void(0)"></a></li>
+                              </li>
+                              <li>
+                                <div class="" role="tab" id="heading4">
+                                  <a href="/filterCategory?categoriesName=All" >Reset filter </a>
+                                </div>
+                                <li><a href="javascript:void(0)"></a></li>
+                                <li><a href="javascript:void(0)"></a></li>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="panel panel-default filterNormal">
+                        <div class="panel-heading">filter by price</div>
+                        <div class="panel-body">
+                          <ul class="list-unstyled clearfix">
+                            <div class="w100 productFilter clearfix">
+                              <div class="pull-right">
+                                  <div class="change-order pull-right">
+                                      <select id="sortDropdown" class="form-control" name="orderby" onchange="sortDropdownFn()">
+                                          <option id="default" value="default" selected="selected">Default sorting</option>
+                                          <option id="priceAscending" value="priceAscending">Sort by price: high to low </option>
+                                          <option id="priceDescending" value="priceDescending">Sort by price: </option>
+                                      </select>
+                                  </div>
+                                  <div class="change-view pull-right">
+                                      <a href="#" title="Grid" class="grid-view">
+                                          <i class="fa fa-th-large"></i>
+                                      </a>
+                                      <a href="#" title="List" class="list-view"><i class="fa fa-th-list"></i></a>
+                                  </div>
+                              </div>
+                            </div>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>  
+            <div class="col-lg-9 col-md-8" style="display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+            grid-template-rows: repeat(auto-fit,minmax(300px,1fr));
+            gap:10px;" >
+          <% productData.forEach((product, i)=> { %>
+                <div class="item" >
+                    <a  href="/productDetails/<%= product._id %>"><img  data-src="/upload/<%= product.productImage1 %>" src="/upload/<%= product.productImage1 %>" alt="image"   class="img-responsive" style="    width: 150px; padding-bottom: 10px;
+                    height: 200px; overflow: hidden;">
+                    </a>
+                    <div style=" display: flex;
+                    flex-direction: column;
+                    flex-wrap: nowrap;
+                    justify-content: center;
+                    align-items: center;">
+                      <a href="/productDetails/<%= product._id %>"><h5 style="padding-bottom: 10px;"><%= product.productName %></h5></a>
+                    
+
+                       <% if(product.priceBeforeOffer) {%>
+                      <h4 style="padding-bottom: 10px;">$<%= product.productPrice %></h4>
+                                                       <s><%=product.priceBeforeOffer %></s>
+                        <% }else{ %>
+
+                          <h4><%= product.productPrice %></h4>
+                          <% } %>
+                    </div>
+                </div>
+                <% }); %>
+                <div class="d-flex justify-content-center py-3">
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                      <% for( let i = 0; i < count/limit; i++ ) { %>
+                      <li class="page-item">
+                        <a class="page-link" href="/productCategory?page=<%=i+1 %>"><%= i+1 %></a>
+                      </li>
+                      <% } %>
+                    </ul>
+                  </nav>
+                </div>
+            </div>
+          </div>
+        </div>
+      </section>
+</body>
+<style>
+
+  .item{
+
+    width: 100px;
+    height : 00px;
+    
+  }
+
+</style>
+<script>
+  async function sortDropdownFn() {
+      try {
+          if (sortDropdown.value == 'default') {
+              return window.location.href = '/productCategory'
+          }
+          const response = await fetch('/productList/sort/' + sortDropdown.value, { method: 'GET' })
+          const data = await response.json()
+          let sortDropdownElement = document.getElementById(`${sortDropdown.value}`)
+          sortDropdownElement.setAttribute('selected', true)
+          if (data.success) {
+              localStorage.setItem('selectedDropdownOption', sortDropdown.value)
+              window.location.href = '/productCategory'
+          }
+      } catch (error) {
+          console.error(error)
+      }
+  }
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const selectedDropdownOption = localStorage.getItem('selectedDropdownOption')
+      if (selectedDropdownOption) {
+          document.getElementById('sortDropdown').value = selectedDropdownOption
+      }
+  })
+</script>
+</html>
+
+<%- include('../layouts/userFooter.ejs') %>

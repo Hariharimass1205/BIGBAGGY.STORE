@@ -1,0 +1,350 @@
+<%- include('../layouts/userHeader.ejs') %>
+
+
+  <!-- LIGHT SECTION -->
+  <section class="lightSection clearfix pageHeader">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="page-title">
+            <h2>billing &amp; Shipping address</h2>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <ol class="breadcrumb">
+            <li>
+              <a href='/'>Home</a>
+            </li>
+            <li>
+              <a href="/cart">cart</a>
+            </li>
+            <li class="active">Shipping Information</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT SECTION -->
+  <section class="mainContent clearfix stepsWrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="innerWrapper clearfix stepsPage">
+            <div class="row progress-wizard" style="border-bottom:0;">
+
+              <div class="col-4 progress-wizard-step active">
+
+
+
+              </div>
+
+              <div class="col-4 progress-wizard-step disabled">
+
+
+
+              </div>
+
+              <div class="col-4 progress-wizard-step disabled">
+
+
+              </div>
+            </div>
+
+            <% addressData.forEach(function(address) { %>
+
+              <form action="#" class="row" method="POST" role="form">
+                <div class="col-12">
+                  <div class="page-header">
+                    <h4>Shipping Address</h4>
+                  </div>
+                </div>
+                <div class="row checkboxArea">
+                  <div class="form-group col-md-6 col-12">
+                    <label for="">Name</label>
+                    <input type="" class="form-control" value="<%= address.name %>" disabled>
+                  </div> 
+                  <div class="form-group col-md-6 col-12">
+                    <label for="">Address</label>
+                    <input type="text" class="form-control" value="<%= address.Address %>" disabled>
+                  </div>
+                  <div class="form-group col-md-6 col-12">
+                    <label for="">Phone</label>
+                    <input type="text" class="form-control" value="<%= address.Phone %>" disabled>
+                  </div>
+                  <div class="form-group col-md-6 col-12">
+                    <label for="">City</label>
+                    <input type="text" class="form-control" value="<%= address.City %>" disabled>
+                  </div>
+                  <div class="form-group col-md-6 col-12">
+                    <label for="">State</label>
+                    <input type="text" class="form-control" value="<%= address.State %>" disabled>
+                  </div>
+                  <div class="form-group col-md-6 col-12">
+                    <label for="">Zip Code</label>
+                    <input type="text" class="form-control" value="641105" disabled>
+                  </div>
+                </div>
+                <a href="/address"><button class="btn btn-primary" type="button" style="margin-bottom: 10px;">Set your
+                    primary Address</button></a>
+                <% }); %>
+                  <div class="col-12">
+                    <div class="page-header">
+                      <h4>Select A Shipping Method</h4>
+                    </div>
+                  </div>
+                  <div class="row checkboxArea">
+                    
+                    <% if(grandTotal>1000){ %>
+                    <div class="col-12 col-lg-6 mb-4">
+                      <input id="checkbox1" type="radio" name="checkbox" value="CASH ON DELIVERY" >
+                      <label for="checkbox1"><span></span>CASH ON DELIVERY</label>
+                      <small>Delivered in 8-12 business days.</small>
+                    </div>
+                    <% } %>
+                    <div class="col-12 col-lg-6 mb-4">
+                      <input id="checkbox2" type="radio" name="checkbox" value="Razor Pay" checked>
+                      <label for="checkbox2"><span></span>Razor Pay</label>
+                      <small>Delivered in 4-7 business days.</small>
+                    </div>
+                    <div class="col-12 col-lg-6 mb-4">
+                      <input id="checkbox2" type="radio" name="checkbox" value="Wallet">
+                      <label for="checkbox2"><span></span>Wallet</label>
+                      <small>Delivered in 4-7 business days.</small>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="well well-lg clearfix">
+                      <ul class="pager">
+                        <li class="next "><a class='btn btn-primary btn-default float-end'
+                            onclick="placeorder()">Confirm Order <i class="fa fa-angle-right"></i></a></li>
+                      </ul>
+                    </div>
+                  </div>
+              </form>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 rightSidebar">
+          <div class="w100 cartMiniTable">
+            <table id="cart-summary" class="std table">
+              <tbody>
+                <tr>
+                  <td>Total Price</td>
+                  <td class="price" id="totalPrice1">₹<%= grandTotal %>
+                  </td>
+                </tr>
+                <% if(grandTotal>500){ %>
+                  <tr>
+                    <td>Shipping</td>
+                    <td class="price">Free shipping!</td>
+                  </tr>
+                  <% }else{ %>
+                    <tr>
+                      <td>Shipping</td>
+                      <td class="price"> ₹40 /td>
+                    </tr>
+                    <% } %>
+                      <tr>
+                        <td>Total Discount</td>
+                        <td class="price" id="totalDiscount">₹0</td>
+                      </tr>
+                      <tr style="font-weight: bolder;">
+                        <td>Grand Total</td>
+                        <td class="site-color" id="total-price">₹<span id="grandTotal">
+                            <%= grandTotal %>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                            <div id="couponContainer" style="display: none;">
+                                <div class="input-append couponForm">
+                                  <form id="couponApplyForm">
+                                    <input class="col-lg-8" style="margin: 20px; width: 100px; padding: 10px;" name="couponCode" id="appendedInputButton" type="text" placeholder="Enter coupon code">
+                                    <button class="col-lg-4 btn btn-primary" type="submit">Apply!</button>
+                                    
+                                  </form>
+                                  <button
+                  class="btn btn-warning"
+                  id="cancelBtn"
+                  onclick="return window.location.reload()"
+                  style="width: 100%;"
+                >
+                  Cancel
+                </button>
+                                </div>
+                                
+                              </div>
+                        </td>                       
+                    </tr>
+              </tbody>
+              
+            </table>
+            <div style="background-color:#46b9b4; padding: 20px; margin: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+              <div class="coupon-container" >
+                <% coupons.reverse().forEach(function(coupon) { %>
+                  <div class="coupon-card" style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; background-color: #f9f9f9;">
+                    <h4><%= coupon.couponCode %></h4>
+                    <p style="margin-top: 10px;" >Discount: <%= coupon.discountPercentage %>%</p>
+                    <p>Minimum Purchase: <%= coupon.minimumPurchase %></p>
+                  </div>
+                <% }); %>
+                
+
+              </div>
+            </div>
+            
+          </div>
+          <!--  /cartMiniTable-->
+
+        </div>
+      </div>
+    </div>
+  </section>
+      
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <%- include('../layouts/userFooter.ejs') %>
+
+    <script>
+      async function placeorder() {
+        const selected = document.querySelector("input[type=radio]:checked").value
+        if (selected == 'CASH ON DELIVERY') {
+          window.location.href = "/confirmOrder"
+        } else if (selected == 'Razor Pay') {
+          const amount = (document.getElementById("grandTotal").textContent).trim()
+          const  razor = await fetch("/razorpayOrderCreated"+amount, {
+            method: 'POST',
+            header: { 'Content-Type': "application/json" },
+            body: JSON.stringify({amount})
+           });
+          const response = await razor.json()
+          openRazorpay(amount,response.id)
+        } else {
+          let response = await fetch("/checkout/orderPlaced", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ walletPayment: true }),
+                });
+                response = await response.json();
+                if (response.insufficientWalletBalance) {
+                    return Swal.fire({
+                        icon: "error",
+                        title: "Insufficient Balance",
+                        text: "No sufficient balance"
+                    });
+                } else if (response.success) {
+                    window.location.href = '/confirmOrder';
+                }
+        }
+      }
+    </script>
+    
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      // Function to open Razorpay
+      async function openRazorpay(amount, creditId) {
+        try {
+         
+          var options = {
+            key: "rzp_test_LSVsVjKJgjMK1G",
+            amount: "" + amount * 100,
+            currency: "INR",
+            name: "BIG BAG STORE",
+            description: "Test Transaction",
+            callback_url: "/confirmOrder",
+            image: "assets/img/comming-soon/logo-comming.png",
+            credit_id: creditId,
+            theme: {
+              color: "#3399cc",
+            },
+          };
+          var razorpay = new Razorpay(options);
+          await razorpay.open();
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    </script>
+
+<script>
+  const isAddonCheckout = true;
+  function toggleCouponContainer() {
+    const couponContainer = document.getElementById('couponContainer');
+    couponContainer.style.display = isAddonCheckout ? 'block' : 'none';
+  }
+  toggleCouponContainer();
+  </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const couponApplyFormElement = document.getElementById('couponApplyForm');
+    couponApplyFormElement.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      await couponApply();
+    });
+  });
+
+  async function couponApply() {
+    try {
+        const couponApplyForm = document.getElementById('couponApplyForm');
+        const formData = { couponCode: couponApplyForm.couponCode.value };
+
+        const response = await fetch('/checkout/applyCoupon', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+        });
+
+        const { couponApplied, discountAmount, couponAlreadyUsed } = await response.json();
+
+        if (couponApplied) {
+            const grandTotalElement = document.getElementById('grandTotal');
+            const grandTotal = parseFloat(grandTotalElement.innerHTML.replace('₹', '')) - discountAmount;
+            grandTotalElement.innerHTML = '' + grandTotal.toFixed(2);
+
+            const totalDiscountElement = document.getElementById('totalDiscount');
+            totalDiscountElement.innerHTML = '₹' + discountAmount.toFixed(2);
+
+            await Swal.fire({
+                icon: "success",
+                title: "Coupon has been applied",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        } else if (couponAlreadyUsed) {
+            await Swal.fire({
+                icon: "error",
+                title: "Coupon already used",
+                text: "Sorry! You have already used this coupon.",
+            });
+        } else {
+            await Swal.fire({
+                icon: "error",
+                title: "Coupon not applicable",
+                text: "Sorry! Your coupon is not applicable.",
+            });
+        }
+    } catch (error) {
+        console.error('Error applying coupon:', error);
+    }
+}
+
+
+  async function storeDiscountInOrder(orderId, discountAmount) {
+    try {
+        const response = await fetch('/orders/storeDiscount', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ orderId, discountAmount }),
+        });
+
+    } catch (error) {
+        console.error('Error storing discount in order:', error);
+    }
+}
+
+</script>
