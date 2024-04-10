@@ -55,7 +55,7 @@ function generateCustomerInformation(doc, orderData) {
       300,
       115
     )
-    .text(`Phone: ${addressChosen.Phone}`, 50, 130)
+    .text(`Phone: ${addressChosen.Phone}`, 300, 150)
     .moveDown();
 }
 
