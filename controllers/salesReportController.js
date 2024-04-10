@@ -191,11 +191,6 @@ const salesReportDownloadPDF = async (req, res) => {
     const page = await browser.newPage();
     let htmlContent = `
       <h1 style="text-align: center;">Sales Report</h1>
-      <tr>
-       <th>Total Order</th>
-       <th>Total sales</th>
-       <th>Total discount</th>
-      </tr>
       <table style="width:100%">
         <tr>
           <th>Order Number</th>

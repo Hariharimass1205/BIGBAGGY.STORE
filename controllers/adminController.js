@@ -157,6 +157,7 @@ const adminLogout = async (req, res) => {
       const user = await userdata.findByIdAndUpdate(id, { isBlocked: true });
       req.session.isBlocked = true
       req.session.save()  
+
       res.status(200).send({success : ture})
     } catch (error) {
       console.log(error);
