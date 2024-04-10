@@ -13,7 +13,6 @@ const wishlistpage = async (req, res) => {
         res.render("user/Wishlist", {
           products
         });
-        console.log(req.session.userInfo);
       } catch (error) {
         console.error("Error in cart:", error);
       }

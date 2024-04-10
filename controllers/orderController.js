@@ -25,8 +25,6 @@ const orderManagement = async (req, res) => {
       let orderData = await orderCollection
         .find().sort({orderNumber: -1})
         .populate("userId").skip(skip).limit(limit);
-      console.log(orderData[0]);
-      console.log(orderData);
       res.render("admin/orderManagement", { orderData, count, limit, page });
     } catch (error) {
       console.error(error);
@@ -146,7 +144,6 @@ const singleorderfn =  async (req, res) => {
     let orderData = await orderCollection
       .findOne({ _id: req.params.id })
       .populate("addressChosen");
-      console.log(orderData)
     let isCancelled = orderData.orderStatus == "Cancelled";
     let isReturn = orderData.orderStatus == "Return";
     res.render("user/singleorderpage", {
@@ -162,13 +159,11 @@ const singleorderfn =  async (req, res) => {
   const cancelOrder = async (req, res) => {
   try {
     const { cancelReason } = req.body;
-    console.log("hhhhhh");
     const orderData = await orderCollection.findOne({ _id: req.params.id });
     await orderCollection.findByIdAndUpdate(
       { _id: req.params.id },
       { $set: { orderStatus: "Cancelled", cancelReason } }
     );
-    console.log(orderData.grandTotalCost)
     let walletTransaction = {
       transactionDate: new Date(),
       transactionAmount: orderData.grandTotalCost,
@@ -221,8 +216,6 @@ const singleorderfn =  async (req, res) => {
 
 const genOrder = async (req,res)=>{
   try{
-    console.log(`req reached genOrder `)
-    console.log(JSON.stringify(req.params.id))
       req.session.save()
       const payMentValue = req.body
       instance.orders

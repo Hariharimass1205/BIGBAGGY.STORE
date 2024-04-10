@@ -13,7 +13,6 @@ const walletCollection = require("../Model/walletModel.js")
       let userCartData = await cartCollection
         .find({ userId: req.session.userInfo._id })
         .populate("productId");
-        console.log(userCartData)
       let grandTotal = 0;
       for (const v of userCartData) {
         grandTotal += v.productId.productPrice * v.productQuantity;
@@ -42,7 +41,6 @@ const walletCollection = require("../Model/walletModel.js")
       const userInfo = req.session?.userInfo
       let userCartData = await grandTotal(req);
 
-      console.log(userCartData)
       let empty;
       userCartData == 0 ? (empty = true) : (empty = false);
       res.render("user/cartpage", {
@@ -59,7 +57,6 @@ const walletCollection = require("../Model/walletModel.js")
 
 
   const addtoCart = async (req, res) => {
-    console.log(req.session.userInfo)
     try {
       let existingProduct = null;
       existingProduct = await cartCollection.findOne({
@@ -79,7 +76,6 @@ const walletCollection = require("../Model/walletModel.js")
             productQuantity: req.body.productQuantity,
           },
         ]);
-        console.log(req.body);
       }
       res.redirect("/cart");
     } catch (error) {
@@ -113,7 +109,6 @@ const decQty = async (req, res) => {
     let cartProduct = await cartCollection
       .findOne({ _id: req.params.id })
       .populate("productId");
-    console.log(cartProduct);
     if (cartProduct.productQuantity > 1) {
       cartProduct.productQuantity--;
     }
@@ -153,7 +148,6 @@ const decQty = async (req, res) => {
         userId: req.session.userInfo._id,
         primary:true
       });
-      console.log(addressData)
 
       req.session.currentOrder = await orderCollection.create({
         userId: req.session.userInfo._id,
@@ -163,7 +157,6 @@ const decQty = async (req, res) => {
         cartData: await grandTotal(req),
         grandTotalCost: req.session.grandTotal,
       });
-      console.log(req.session.currentOrder)
       const coupons = await couponCollection.find(); 
       let userCartData = await grandTotal(req);
       req.session.save()
@@ -255,7 +248,6 @@ const decQty = async (req, res) => {
     let cartData = await cartCollection
       .find({ userId: req.session.userInfo._id })
       .populate("productId");
-    // console.log(cartData);
 
     for (const item of cartData) {
       item.productId.productStock -= item.productQuantity; // we use for reducing Qyantity
@@ -281,7 +273,6 @@ const decQty = async (req, res) => {
     });
     //delete product from cart since the order is placed
     await cartCollection.deleteMany({ userId: req.session.userInfo._id });
-    console.log("deleting finished");
     } catch (error) {
       console.log(error)
     }
@@ -302,7 +293,6 @@ const decQty = async (req, res) => {
       let { minimumPurchase, expiryDate } = couponData;
       let minimumPurchaseCheck = minimumPurchase < grandTotal;
       let expiryDateCheck = new Date() < new Date(expiryDate);
-      console.log(new Date(expiryDate))
       if (minimumPurchaseCheck && expiryDateCheck) {
         let { discountPercentage, maximumDiscount } = couponData;
         let discountAmount =

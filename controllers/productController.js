@@ -7,9 +7,6 @@ const productlist= async (req, res) => {
         let page = Number(req.query.page) || 1;
         let limit = 4;
         let skip = (page - 1) * limit;
-        console.log(skip)
-        console.log(limit)
-        console.log(page)
         let   count = await productCollection.find().estimatedDocumentCount();
         let productData = await productCollection.find().skip(skip).limit(limit);
         let categoryList = await categoryCollection.find(
@@ -32,7 +29,6 @@ const productlist= async (req, res) => {
   const addProductPage = async (req, res) => {
     try {
       const categories = await categoryCollection.find({ isListed:true});
-      console.log(categories);
       res.render("admin/addproduct.ejs", {
         categories,
       });
@@ -44,7 +40,7 @@ const productlist= async (req, res) => {
 
 
   const addProduct = async (req, res) => {
-    console.log(productCollection);
+
     try {
       let existingProduct = await productCollection.findOne({
         productName: { $regex: new RegExp(req.body.productName, "i") },
@@ -62,10 +58,8 @@ const productlist= async (req, res) => {
             productStock: req.body.productStock,
           },
         ]);
-        // console.log(req.files[0].filename);
         res.redirect("/admin/products");
       } else {
-        console.log("addpro out")
         req.session.productAlreadyExists = existingProduct;
         res.redirect("/admin/addproduct");
       }
@@ -75,12 +69,12 @@ const productlist= async (req, res) => {
   };
   const editProductpage = async (req, res) => {
     try {
-      console.log("editpage");
+
       const productId = req.params.id;
-      console.log(productId);
+
       const productData = await productCollection.findOne({_id:productId}); 
       const categories = await categoryCollection.find({ })
-      console.log(categories);
+
       res.render("admin/editproduct.ejs", {
         productData,categories
         // productExists: req.session.productAlreadyExists,
@@ -103,7 +97,6 @@ const deleteProduct = async (req,res)=>{
 
   const unListProduct = async (req, res) => {
     try {
-      console.log("hajaak")
       await productCollection.findOneAndUpdate(
         { _id: req.params.id },
         { $set: { isListed: false } }
@@ -129,16 +122,12 @@ const deleteProduct = async (req,res)=>{
   };
 
   const editProduct = async (req, res) => {
-    console.log("edit");
     try {
-      console.log(req.body.productName)
       let existingProduct = await productCollection.find({
         productName: req.body.productName
       });
-      console.log(existingProduct);
-      console.log(req.params.id)
+
       if (existingProduct.length == 0 || (existingProduct[0]._id == req.params.id && existingProduct.length ==1)) {
-        console.log("edit1");
         const updateFields = {
           $set: {
             productName: req.body.productName,
@@ -160,7 +149,6 @@ const deleteProduct = async (req,res)=>{
           { _id: req.params.id },
           updateFields
         );
-        console.log("edit3");
         res.redirect("/admin/products");
       } else {
         req.session.productAlreadyExists = existingProduct;
@@ -174,9 +162,7 @@ const deleteProduct = async (req,res)=>{
   const search = async (req, res) => {
     try {
 
-      console.log(req.body);
       const searchQuery  = req.body.search // Adjust according to the name attribute of your form input
-      console.log(searchQuery)
       const searchProduct = await productCollection.find({
         $or: [
           { productName: { $regex: searchQuery, $options: "i" } },
@@ -237,7 +223,6 @@ const deleteProduct = async (req,res)=>{
       }
       let totalPages = Math.ceil(count / limit);
       let totalPagesArray = new Array(totalPages).fill(null);
-      console.log(req.session.button);
       res.render("user/productsCategory", {
         categoryData,
         productData,
@@ -265,7 +250,9 @@ const deleteProduct = async (req,res)=>{
         user: req.session.user, 
         currentProduct,
       });
-    } catch (error) { }
+    } catch (error) { 
+      console.log(error)
+    }
   },
 
        sortPriceAscending: async (req, res) => {

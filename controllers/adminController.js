@@ -111,7 +111,6 @@ const adminLogout = async (req, res) => {
       // req.session.isLoggedin = false
       req.session.isAdmin = false;
       req.session.admin = null;
-      console.log("logged out");
       res.redirect("/admin");
     } catch (error) {
       console.log(error.message);
@@ -147,7 +146,6 @@ const adminLogout = async (req, res) => {
       const user = await userdata.findByIdAndUpdate(id, { isBlocked: false });
       req.session.isBlocked = false
       req.session.save()
-      console.log(req.session.isBlocked)
       res.status(200).send({success : ture})
     } catch (error) {
       console.log(error);
@@ -159,7 +157,6 @@ const adminLogout = async (req, res) => {
       const user = await userdata.findByIdAndUpdate(id, { isBlocked: true });
       req.session.isBlocked = true
       req.session.save()  
-      console.log(req.session.isBlocked)
       res.status(200).send({success : ture})
     } catch (error) {
       console.log(error);

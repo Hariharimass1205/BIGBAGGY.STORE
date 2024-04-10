@@ -41,7 +41,6 @@ const userAddressfn = async (req,res)=>{
    }
    const newAddress = await addressCollection.insertMany([userAddress])
    const newAddress1 = await addressCollection.findOneAndUpdate({ _id: req.params.id },{primary:true});
-   console.log(newAddress);
     req.session.address = newAddress
     res.redirect('/address')
  }

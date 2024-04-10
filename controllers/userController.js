@@ -15,7 +15,6 @@ const landingPagefn = (req, res) => {
   req.session.userinfosignin
   req.session.userName
   req.session.isBlocked = false
-  console.log(req.session.userinfosignin)
   res.render("user/landingpage", { userInfo: req.session.userInfo, userName: req.session.userName })
 }
 
@@ -67,8 +66,6 @@ const signupPagefn = (req, res) => {
   try {
     req.session.emailExist;
     req.session.userNumber;
-    console.log(`======req.query=====`)
-    console.log(req.query)
     req.session.referalCodeuseage = req.query
     res.render("user/signup", { emailExist: req.session.emailExist, userNumber: req.session.userNumber })
     req.session.emailExist = false
@@ -129,13 +126,9 @@ const optVerify = async (req, res) => {
     await userCollection({fname,lname,email,Password,confirmPass,Phone,ReferalCode}).save()
     if(req.session.referalCodeuseage)
     {
-      console.log(req.body)
-      console.log(`=================`)
       const referalUser = await userCollection.findOne({ReferalCode:req.session?.referalCodeuseage?.referralCode})
-      console.log(referalUser)
       await walletCollection.updateOne({userId:referalUser._id},{$inc:{walletBalance:500}})
-      console.log(req.session?.referalCodeuseage)
-      console.log(req.session?.referalCodeuseage?.referralCode)
+
     }
     req.session.userName = userdetails.fname + userdetails.lname
     req.session.email = userdetails.email
@@ -167,7 +160,6 @@ const forgetpage1fn = (req, res) => {
 const forgetpage2fn = async (req, res) => {
   try {
     const forgetEmail = req.body.email
-    console.log(forgetEmail)
     const emailcheck = await userCollection.findOne({email:forgetEmail})
     if(emailcheck){
     req.session.forgetEmail = req.body.email
@@ -193,7 +185,6 @@ const forgetpage3fn = (req, res) => {
     if (otp === ourotp) {
       res.render("user/forgetpage3")
     } else {
-      console.log("else worked in forget 3")
       req.session.resetotpinvalid = true
       res.render("user/forgetpage2")
     }
@@ -207,8 +198,6 @@ const forgetpage3fn = (req, res) => {
 const forgetpage4fn = async (req, res) => {
   const newpass = req.body.NewPassword
   const email = req.session.forgetEmail
-  console.log("foremaildown")
-  console.log(req.session.forgetEmail)
   const user = await userCollection.findOne({ email: email });
   const passwordHash = await bcrypt.hash(newpass, 10);
   const newfeild = await userCollection.findByIdAndUpdate(
@@ -224,7 +213,6 @@ const forgetpage4fn = async (req, res) => {
 //render into otp function for signup
 const insertUser = async (req, res) => {
   const email = req.session.forgetEmail;
-  console.log(req.session.forgetEmail)
   let otp = await resentotp(email);
   req.session.otp1 = otp;
   res.render("user/otppage");
@@ -234,7 +222,6 @@ const insertUser = async (req, res) => {
 // callback fn for otp
 const emailOtp = async (email) => {
   try {
-    console.log(email)
     const emailID = email;
     const transport = nodemailer.createTransport({
       service: "Gmail",
@@ -291,8 +278,6 @@ const userProfilefn = async (req, res) => {
   try {
     const currentUser = req.session.userInfo
     const walletBalance = await walletCollection.findOne({userId:currentUser._id})
-    console.log("profile innn")
-    console.log(walletBalance)
     const userInfo = await userCollection.findById({ _id: currentUser._id })
     res.render("user/Profilepage", { userInfo , walletBalance:walletBalance })
   } catch (error) {
@@ -337,7 +322,6 @@ const passChange = async (req, res) => {
 
 const PostpassChange = async (req, res) => {
   try {
-    console.log(req.body.Password);
     const { currentPassword, newPassword } = req.body
     const user = req.session.userInfo
 
