@@ -26,11 +26,9 @@ const {
 }=require("../controllers/categoryController.js")
 
 const {
-    sortPricefn,
     productCategoryfn,
     ProductDetailsfn,
     search,
-    filterPriceRange,
     sortPriceAscending,
     sortPriceDescending
 }= require("../controllers/productController.js")

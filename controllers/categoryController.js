@@ -10,7 +10,7 @@ const categoriesPage = async (req, res) => {
       let skip = (page - 1) * limit;
       let count = await categoryCollection.find().estimatedDocumentCount();
       let categoryData = await categoryCollection.find().skip(skip).limit(limit);
-      res.render("admin/Category.ejs", {
+      res.render("admin/category.ejs", {
         categoryData,
         count,
         limit,

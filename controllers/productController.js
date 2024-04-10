@@ -13,7 +13,7 @@ const productlist= async (req, res) => {
           { },
           { categoryName: true }
         );
-        res.render("admin/productlist.ejs", {
+        res.render("admin/productList.ejs", {
           productData,
           categoryList,count,
           limit,
@@ -29,7 +29,7 @@ const productlist= async (req, res) => {
   const addProductPage = async (req, res) => {
     try {
       const categories = await categoryCollection.find({ isListed:true});
-      res.render("admin/addproduct.ejs", {
+      res.render("admin/addProduct.ejs", {
         categories,
       });
       req.session.productAlreadyExists = null;
@@ -75,7 +75,7 @@ const productlist= async (req, res) => {
       const productData = await productCollection.findOne({_id:productId}); 
       const categories = await categoryCollection.find({ })
 
-      res.render("admin/editproduct.ejs", {
+      res.render("admin/editProduct.ejs", {
         productData,categories
         // productExists: req.session.productAlreadyExists,
       });
