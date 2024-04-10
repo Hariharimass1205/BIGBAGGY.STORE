@@ -12,8 +12,6 @@ const userAddressfn = async (req,res)=>{
    if(addressData.length <= 0){
     addressData = false
    }
-
-   
    res.render("user/addresspage", {
      currentUser: req.session.userInfo._id,
      addressData
