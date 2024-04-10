@@ -261,7 +261,7 @@ const deleteProduct = async (req,res)=>{
       const currentProduct = await productCollection.findOne({
         _id: req.params.id,
       });
-      res.render("user/productDetails", {
+      res.render("user/ProductDetails", {
         user: req.session.user, 
         currentProduct,
       });
