@@ -1,5 +1,6 @@
 const categoryCollection = require("../Model/categoryModel");
 const productCollection = require("../Model/productModel");
+const cartCollection = require("../Model/cartModel");
 
 //    admin product process fn below
 const productlist= async (req, res) => {
@@ -31,6 +32,7 @@ const productlist= async (req, res) => {
       const categories = await categoryCollection.find({ isListed:true});
       res.render("admin/addProduct.ejs", {
         categories,
+        productAlreadyExists:req.session.productAlreadyExists
       });
       req.session.productAlreadyExists = null;
     } catch (error) {
@@ -40,12 +42,11 @@ const productlist= async (req, res) => {
 
 
   const addProduct = async (req, res) => {
-
     try {
       let existingProduct = await productCollection.findOne({
         productName: { $regex: new RegExp(req.body.productName, "i") },
          productName: req.body.productName,
-      });
+        });
       if (!existingProduct) {
         await productCollection.insertMany([
           {
@@ -67,14 +68,13 @@ const productlist= async (req, res) => {
       console.log(err);
     }
   };
+
+
   const editProductpage = async (req, res) => {
     try {
-
       const productId = req.params.id;
-
       const productData = await productCollection.findOne({_id:productId}); 
-      const categories = await categoryCollection.find({ })
-
+      const categories = await categoryCollection.find({})
       res.render("admin/editProduct.ejs", {
         productData,categories
         // productExists: req.session.productAlreadyExists,
@@ -83,7 +83,46 @@ const productlist= async (req, res) => {
       console.error( error);
     }
   };
+  
+  const editProduct = async (req, res) => {
+    try {
+      let existingProduct = await productCollection.find({
+        productName: req.body.productName
+      });
+      if (existingProduct.length == 0 || (existingProduct[0]._id == req.params.id && existingProduct.length ==1)) {
+        const updateFields = {
 
+          $set: {
+            productName: req.body.productName,
+            parentCategory: req.body.category,
+            productPrice: req.body.productPrice,
+            productStock: req.body.productStock,
+          },
+         
+        };
+        if (req.files[0]) {
+          updateFields.$set.productImage1 = req.files[0].filename;
+        }
+        if (req.files[1]) {
+          updateFields.$set.productImage2 = req.files[1].filename;
+        }
+        if (req.files[2]) {
+          updateFields.$set.productImage3 = req.files[2].filename;
+        }
+        await productCollection.findOneAndUpdate(
+          { _id: req.params.id },
+          updateFields
+        );
+        res.redirect("/admin/products");
+      } else {
+        req.session.productAlreadyExists = existingProduct;
+        res.redirect("/admin/products");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
 const deleteProduct = async (req,res)=>{
    try{
       await productCollection.findOneAndDelete({ _id: req.params.id });
@@ -92,9 +131,6 @@ const deleteProduct = async (req,res)=>{
       console.error(error);
     }
   }
-
-
-
   const unListProduct = async (req, res) => {
     try {
       await productCollection.findOneAndUpdate(
@@ -121,43 +157,6 @@ const deleteProduct = async (req,res)=>{
     }
   };
 
-  const editProduct = async (req, res) => {
-    try {
-      let existingProduct = await productCollection.find({
-        productName: req.body.productName
-      });
-
-      if (existingProduct.length == 0 || (existingProduct[0]._id == req.params.id && existingProduct.length ==1)) {
-        const updateFields = {
-          $set: {
-            productName: req.body.productName,
-            parentCategory: req.body.parentCategory,
-            productPrice: req.body.productPrice,
-            productStock: req.body.productStock,
-          },
-        };
-        if (req.files[0]) {
-          updateFields.$set.productImage1 = req.files[0].filename;
-        }
-        if (req.files[1]) {
-          updateFields.$set.productImage2 = req.files[1].filename;
-        }
-        if (req.files[2]) {
-          updateFields.$set.productImage3 = req.files[2].filename;
-        }
-        await productCollection.findOneAndUpdate(
-          { _id: req.params.id },
-          updateFields
-        );
-        res.redirect("/admin/products");
-      } else {
-        req.session.productAlreadyExists = existingProduct;
-        res.redirect("/admin/products");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const search = async (req, res) => {
     try {
@@ -176,8 +175,6 @@ const deleteProduct = async (req,res)=>{
       console.log(error);
     }
   };
-
-
   
   module.exports = 
   {
@@ -223,6 +220,8 @@ const deleteProduct = async (req,res)=>{
       }
       let totalPages = Math.ceil(count / limit);
       let totalPagesArray = new Array(totalPages).fill(null);
+
+      
       res.render("user/productsCategory", {
         categoryData,
         productData,
@@ -246,9 +245,22 @@ const deleteProduct = async (req,res)=>{
       const currentProduct = await productCollection.findOne({
         _id: req.params.id,
       });
+      var cartProductQuantity=0
+    if(req.session?.currentUser?._id){
+      const cartProduct = await cartCollection.findOne({ userId: req.session.currentUser._id, productId: req.params.id })
+      if(cartProduct){
+        var cartProductQuantity= cartProduct.productQuantity
+      }
+    } 
+    let productQtyLimit = [],i=0
+      while(i<(currentProduct.productStock - cartProductQuantity )){
+        productQtyLimit.push(i+1)
+        i++
+      }
       res.render("user/ProductDetails", {
         user: req.session.user, 
         currentProduct,
+        productQtyLimit
       });
     } catch (error) { 
       console.log(error)

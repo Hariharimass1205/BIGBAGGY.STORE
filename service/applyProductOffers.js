@@ -7,7 +7,7 @@ module.exports = {
     try {
       console.log(` req applyProductOffer `)
       // updating the currentStatus field of productOfferCollection by checking with the current date
-      let productOfferData = await productOfferCollection.find();
+      let productOfferData = await productOfferCollection.find({});
       productOfferData.forEach(async (v) => {
         await productOfferCollection.updateOne(
           { _id: v._id },
@@ -26,11 +26,9 @@ module.exports = {
           productId: v._id,
           currentStatus: true,
         });
-
         if (offerExists) {
           offerExistsAndActiveFn(v, offerExists, from);
         }
-
         let offerExistsAndInactive = await productOfferCollection.findOne({
           productId: v._id,
           currentStatus: false,

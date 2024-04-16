@@ -90,7 +90,6 @@ const incQty = async (req, res) => {
     let cartProduct = await cartCollection
       .findOne({ _id: req.params.id })
       .populate("productId");
-
     if (cartProduct.productQuantity < cartProduct.productId.productStock) {
       cartProduct.productQuantity++;
     }
@@ -101,7 +100,6 @@ const incQty = async (req, res) => {
     console.error(error);
   }
 };
-
 
 
 const decQty = async (req, res) => {
@@ -261,7 +259,7 @@ const decQty = async (req, res) => {
       return v;
     })
     let orderData = await orderCollection.findOne({ _id: req.session.currentOrder._id})
-    if(orderData.paymentType =='toBeChosen'){
+    if(orderData.paymentType =='online'){
       await orderCollection.updateOne({ _id: req.session.currentOrder._id}, { $set : { paymentType: 'COD'   }  })
     }
     let x = await cartCollection.findByIdAndUpdate({ _id: req.session.currentOrder._id}).populate("productId");
@@ -334,9 +332,19 @@ const decQty = async (req, res) => {
   
 
 
-
-
-  module.exports={cartpagefn,addtoCart,decQty,incQty,deleteFromCart,getcheckoutpagefn,orderPlacedEnd,orderPlaced,storedApplycoupon,applyCoupon}
+  module.exports=
+  {
+    cartpagefn,
+    addtoCart,
+    decQty,
+    incQty,
+    deleteFromCart,
+    getcheckoutpagefn,
+    orderPlacedEnd,
+    orderPlaced,
+    storedApplycoupon,
+    applyCoupon
+  }
 
 
 

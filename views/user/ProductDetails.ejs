@@ -142,31 +142,65 @@
                   <h2> <%= currentProduct.productName %></h2>
                   <h3>$<%= currentProduct.productPrice %></h3>
                   <p>Mauris lobortis augue ex, ut faucibus nisi mollis ac. Sed volutpat scelerisque ex ut ullamcorper. Cras at velit quis sapien dapibus laoreet a id odio. Sed sit amet accumsan ante, eu congue metus. Aenean eros tortor, cursus quis feugiat sed vestibulum.</p>
-                  <div class="row">
-                   
-
-
-                    <div class="col-12">
-                      <div class="d-flex align-items-center mb-5 pt-3">
-                        <div class="SingleCartListInner cartListInner ps-1">
-                              <h3>Currently Available Stocks : <%= currentProduct.productStock %></h3>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                  
-                  
+                  <div class="cart-actions">
+                    <div class="addto row">
+                        <% if (productQtyLimit.length === 0) { %>
+                            <!-- Handle the case where productQtyLimit has a length of 0 -->
+                        <% } else { %>
+                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                                
+                            </div>
+                            <div class="">
+                                                            
+                              <a href="/cart/<%= currentProduct._id %>" class="button btn-block btn-cart cart first green-button" onclick="addToCart()" style="width: max-content;"><button style="margin-bottom: 20px; font-size: medium;" type="submit" class="btn btn-primary">Add to cart</button></a>
+                              
+                               
+  
+                            </div>
+                        <% } %>
+                        <a href="/wishList/<%= currentProduct._id %>" class="button btn-block btn-cart cart " id="wishList" onclick="addToWishList()" style="width: max-content;" > <button style="margin-bottom: 20px; font-size: medium; width: fit-content;" type="submit" class="btn btn-primary">Add to  Wishlist</button></a>
+                               <style>
+                                 .green1-button {   
+                                   background: #4ec67f;
+                                   color: white;
+                                  }
+                                  #wishList{
+                                    margin-top: 30px;
+                                  }
+                                   
+                               </style>
+                
+                        <!-- The following section can be uncommented if needed -->
+                        <!-- <div id="wishlist" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <a class="link-wishlist wishlist btn-block ">Add to Wishlist</a>
+                        </div> -->
+                
+                    </div>
+                    <div style="clear:both"></div>
+                    <% if (productQtyLimit.length === 0) { %>
+                        <h3 class="incaps"><i class="fa fa-minus-circle color-out"></i> Out of stock</h3>
+                    <% } else { %>
+                        <h3 class="incaps"><i class="fa fa fa-check-circle-o color-in"></i> In stock</h3>
+                        <h3 class="incaps"><i class="glyphicon glyphicon-lock"></i> Secure online ordering</h3>
+                    <% } %>
+                </div>
 
-                 <form action="/addto-cart/<%=currentProduct._id%>" method="post">
-                  <div class="btn-area mb-0" >
-                    <button style="margin-bottom: 20px; font-size: medium;" type="submit" class="btn btn-primary">Add to cart</button>
-                  </div>
-                </form>
-                <form action="/wishList/<%= currentProduct._id %>" >
-                  <div class="btn-area mb-0">
-                    <button style="margin-bottom: 20px; font-size: medium; width: fit-content;" type="submit" class="btn btn-primary">Add to  Wishlist</button>
-                  </div>
-                </form>
+
+           
+
+
+
+
+
+
+
+
+
+
+                 
+                 
+            
 
                   <div class="tabArea d-none">
                    

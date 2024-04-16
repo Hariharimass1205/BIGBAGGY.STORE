@@ -42,7 +42,7 @@
         <div class="container mt-5">
             <h2>Add Category</h2>
             <% if(categoryExists) { %>
-                <h4>Category Name Alredy Exsit</h4>
+                <h4 style="color:red;">Category Name Alredy Exsit</h4>
                 <% } %>
             <form action="/admin/categories/add" method="POST" class="mt-4">
                 <div class="form-group">

@@ -44,12 +44,12 @@
             </head>
 
             <body>
-                <% if(categoryExists) {%>
-                        <h4>Category Name Already Exist</h4>
-                        <% } %>
+                
                 <div class="container mt-5">
                     <h2>Edit Category</h2>
-                    
+                    <% if(categoryExists) {%>
+                        <h4 style="color: red">Category Name Already Exist</h4>
+                        <% } %>
                     <form action="/admin/editCategories/<%=data._id%>" method="POST" class="mt-4">
                         <div class="form-group">
                             <label for="categoriesName">Category Name</label>
@@ -69,6 +69,7 @@
                 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
                 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                
             </body>
 
             </html>

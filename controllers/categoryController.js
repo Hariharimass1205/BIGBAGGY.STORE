@@ -54,10 +54,8 @@ const categoriesPage = async (req, res) => {
 
   const editCategory = async (req, res) => {
     req.session.categoryExists;
-  
     try {
       let data = await categoryCollection.findOne({ _id: req.params.id });
-  
       res.render("admin/editCategory.ejs", {
         data: data,
         categoryExists: req.session.categoryExists,
@@ -74,8 +72,9 @@ const categoriesPage = async (req, res) => {
     try {
       let categoryName = req.body.categoriesName;
       let categoryExists = await categoryCollection.findOne({
-        categoryName: { $regex: new RegExp(`^${categoryName}$, "i"`) },
-      });
+        categoryName: { $regex: categoryName , $options : "i" },
+      });   
+      console.log(categoryExists)
       if (!categoryExists) {
         await categoryCollection.findOneAndUpdate(
           { _id: req.params.id },

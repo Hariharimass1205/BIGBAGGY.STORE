@@ -15,7 +15,7 @@ const orderSchema= new mongoose.Schema({
      default: new Date()},
     paymentType: 
     {type: String,
-     default:'toBeChosen'},
+     default:'online'},
     orderStatus: 
     {type: String, 
     default:'Pending'},

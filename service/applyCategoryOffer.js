@@ -5,12 +5,11 @@ const applyCategoryOffer = async () => {
     try {
       const today = new Date();
       const offers = await CategoryOfferModel.find({ isAvailable: true });
-      const allProducts = await ProductModel.find();
+      const allProducts = await ProductModel.find({});
       for (const prod of allProducts) {
         const currentOffer = offers.find(
           (offer) => String(offer.category) === String(prod.category)
         );
-  
         if (
           currentOffer &&
           currentOffer.startDate <= today &&
@@ -31,6 +30,4 @@ const applyCategoryOffer = async () => {
       console.log(error);
     }
   };
-
-
   module.exports = { applyCategoryOffer };

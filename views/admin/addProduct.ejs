@@ -33,6 +33,9 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h4>Basic</h4>
+                        <% if(productAlreadyExists){ %>
+                        <h4 style="color: red;">Product Name Already Exsit</h4>
+                        <% } %>
                     </div>
                     <div class="card-body">
                         
@@ -64,7 +67,7 @@
                                     <img id="croppedImg1" src="" style="width: 500px; height: 500px; display: none"
                                         alt="Img" />
                                     <div class="input-group mb-3">
-                                        <input id="input-img1" name="productImage1" type="file" class="form-control"
+                                        <input id="input-img1" name="productImage1" type="file" class="form-control"  accept="image/*"
                                             placeholder="Product Image1" onchange="displayImage1(event)" required />
                                     </div>
                                 </div>
@@ -75,7 +78,7 @@
                                     <img id="croppedImg2" src="" style="width: 500px; height: 500px; display: none"
                                         alt="Img" />
                                     <div class="input-group mb-3">
-                                        <input id="input-img2" name="productImage2" type="file"
+                                        <input id="input-img2" name="productImage2" type="file"  accept="image/*"
                                             class="form-control" placeholder="Product Image2"
                                             onchange="displayImage2(event)" required />
                                     </div>
@@ -87,18 +90,18 @@
                                 <img id="croppedImg3" src="" style="width: 500px; height: 500px; display: none"
                                     alt="Img" />
                                     <div class="input-group mb-3">
-                                        <input id="input-img3" name="productImage3" type="file"
+                                        <input id="input-img3" name="productImage3" type="file"  accept="image/*"
                                             class="form-control" placeholder="Product Image3"
                                             onchange="displayImage3(event)" required />
                                     </div>
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    <input name="productPrice" type="tel" class="form-control"
+                                    <input name="productPrice" type="number" class="form-control" min="1"
                                         placeholder="Product Price" required />
                                 </div>
                                 <div class="input-group mb-3">
-                                    <input name="productStock" type="tel" class="form-control"
+                                    <input name="productStock" type="number" class="form-control" min="1"
                                         placeholder="Product Stock" required />
                                 </div>
                             </div>

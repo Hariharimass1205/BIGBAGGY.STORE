@@ -57,7 +57,7 @@ const loadLogin = async (req, res) => {
       if (!productData) {
         productData = [];
       }
-      console.log(productData)
+      // console.log(productData)
   
       res.render("admin/dashboard", { productData, userData });
     } catch (error) {

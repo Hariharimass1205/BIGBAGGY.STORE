@@ -9,7 +9,6 @@ const applyProductOffers =
 const applyCategoryOffer= require("../service/applyCategoryOffer").applyCategoryOffer;
 
 
-
    const  productOfferManagement = async (req, res) => {
     try {
       // updating the currentStatus field by checking with the current date
@@ -44,15 +43,18 @@ const applyCategoryOffer= require("../service/applyCategoryOffer").applyCategory
     }
   }
 
+
   const addOffer = async (req, res) => {
     try {
       //check if the product already has an offer applied
       let { productName } = req.body;
+      console.log(req.body)
       let existingOffer = await productOfferCollection.findOne({ productName });
+      console.log(existingOffer)
       if (!existingOffer) {
         //if offer for that particular product doesn't exist:
         let productData = await productCollection.findOne({productName });
-
+        console.log(productData)
         let { productOfferPercentage, startDate, endDate } = req.body;
         await productOfferCollection.insertMany([
           {
@@ -73,7 +75,6 @@ const applyCategoryOffer= require("../service/applyCategoryOffer").applyCategory
     }
   }
 
-
   const editOffer = async (req, res) => {
     try {
       let { productName } = req.body;
@@ -89,14 +90,11 @@ const applyCategoryOffer= require("../service/applyCategoryOffer").applyCategory
           startDate: new Date(startDate),
           endDate:new Date(expiryDate),
         };
-
         const hhh=await productOfferCollection.findByIdAndUpdate(
           req.params.id,
           updateFields
         );
-       
         await applyProductOffers("editOffer");
-        
         res.status(200).send({success:true})
         // res.json({ success: true });
       } else {
@@ -106,6 +104,7 @@ const applyCategoryOffer= require("../service/applyCategoryOffer").applyCategory
       console.error(error);
     }
   }
+
 
 
 
@@ -181,4 +180,13 @@ const editCategoryOffer = async (req, res) => {
   }
 }
 
-  module.exports={ productOfferManagement,addOffer,editOffer,getCategoryOffer,addCategoryOffer,editCategoryOfferStatus,editCategoryOffer}
+  module.exports=
+  { 
+    productOfferManagement,
+    addOffer,
+    editOffer,
+    getCategoryOffer,
+    addCategoryOffer,
+    editCategoryOfferStatus,
+    editCategoryOffer
+  }

@@ -38,7 +38,7 @@
             <body>
                 <div class="container mt-5">
                     <h2>Edit Product</h2>
-                    <form action="/admin/editProduct/<%=productData._id%>" method="POST" enctype="multipart/form-data">
+                    <form action="/admin/editProduct/<%=productData._id%>" method="POST" enctype="multipart/form-data" id="EditProduct"> 
                         <div class="form-group">
                             <label for="productName">Product Name</label>
                             <input type="text" class="form-control" id="productName"
@@ -69,96 +69,70 @@
                             </div>
                         </div>
                         <div class="input-group mb-3">
-                            <input name="productPrice" type="text" class="form-control"
+                            <input name="productPrice" min="1" type="number" class="form-control"  required
                                 value="<%= productData.productPrice %>">
                         </div>
 
                         <div class="input-group mb-3">
-                            <input name="productStock" type="text" class="form-control"
+                            <input name="productStock" min="1" type="number" class="form-control" required
                                 value="<%= productData.productStock %>">
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="Category">Category</label>
-
-                                <select class="form-control p_input" name="category" placeholder="category" >
+                                <select class="form-control p_input" name="category" placeholder="category">
+                                    <option value="" selected>
+                                        Select Category
+                                      </option>
                                     <% categories.forEach((value)=>{ %>
-                                        <option value="<%=value.categoryName  %>">
+                                        <option value="<%=value.categoryName %>">
                                             <%= value.categoryName %>
                                         </option>
                                         <% }) %>
 
                                 </select>
-
-                                <!-- <div class="form-group">
-
-                                                <input type="file" class="form-control-file" id="productImage"
-                                                    name="productImage">
-                                            </div> -->
                                 <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Save Changes</button>
                             </div>
                         </div>
                     </form>
                 </div>
 
-
-                <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"></script>
                 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
             </body>
 
             </html>
-            <!-- <div class="pagination-area mt-15 mb-50">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-start">
-                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                    <li class="page-item"><a class="page-link" href="#">02</a></li>
-                    <li class="page-item"><a class="page-link" href="#">03</a></li>
-                    <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                    <li class="page-item"><a class="page-link" href="#">16</a></li>
-                    <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
-                </ul>
-            </nav>
-        </div> -->
-        </section> <!-- content-main end// -->
-        
+        </section> 
     </main>
-
-    <!-- {{!-- onchange image display --}} -->
-    <!-- <script>
-        function displayImage1() {
-            const reader = new FileReader()
-            reader.onload = () => {
-                preview1.src = reader.result
-            }
-            const file = document.querySelector("#productImage1").files[0];
-            if (file) {
-                preview1.style.display = 'block'
-                reader.readAsDataURL(file)
-            }
-        }
-        function displayImage2() {
-            const reader = new FileReader()
-            reader.onload = () => {
-                preview2.src = reader.result
-            }
-            const file = document.querySelector("#productImage2").files[0];
-            if (file) {
-                preview2.style.display = 'block'
-                reader.readAsDataURL(file)
-            }
-        }
-        function displayImage3() {
-            const reader = new FileReader()
-            reader.onload = () => {
-                preview3.src = reader.result
-            }
-            const file = document.querySelector("#productImage3").files[0];
-            if (file) {
-                preview3.style.display = 'block'
-                reader.readAsDataURL(file)
-            }
-        }
-    </script> -->
-
 <%- include('../layouts/adminFooter.ejs') %>
+<script>
+
+$("#EditProduct").validate({
+    rules:{
+        productPrice: {
+            required: true,            
+            min: 1
+        },
+        productStock: {
+            required: true,
+            min: 1
+        }
+    },
+    messages: {
+        productPrice: {
+            required: "Please enter a value.",
+            min: "Please enter a value greater than or equal to 0."
+        },
+        productStock: {
+            required: "Please enter a value.",
+            min: "Please enter a value greater than or equal to 0."
+        }
+    }
+});
+
+
+</script>
+
+
