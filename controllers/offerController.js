@@ -30,7 +30,7 @@ const applyCategoryOffer= require("../service/applyCategoryOffer").applyCategory
         v.endDateFormatted = formatDate(v.endDate, "YYYY-MM-DD");
         return v;
       });
-      
+
       let productData = await productCollection.find({isListed:true});
       let categoryData = await categoryModel.find({isListed:true});
       res.render("admin/productOfferList", {
@@ -43,7 +43,7 @@ const applyCategoryOffer= require("../service/applyCategoryOffer").applyCategory
     }
   }
 
-
+  
   const addOffer = async (req, res) => {
     try {
       //check if the product already has an offer applied
