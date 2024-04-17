@@ -103,7 +103,7 @@
                         data-image="/upload/<%= currentProduct.productImage1 %>"
                         data-zoom-image="/upload/<%= currentProduct.productImage1 %>"
                         onclick="changeImg(this)">
-                        <img src="/upload/<%= currentProduct.productImage1 %>"
+                        <img src="/upload/<%= currentProduct.productImage1 %>"style="width: 300px; height: 300px;
                             alt="product side">
                     </a>
 
@@ -111,14 +111,14 @@
                         data-image="/upload/<%= currentProduct.productImage2 %>"
                         data-zoom-image="/upload/<%= currentProduct.productImage2 %>"
                         onclick="changeImg(this)">
-                        <img src="/upload/<%= currentProduct.productImage2 %>"
+                        <img src="/upload/<%= currentProduct.productImage2 %>"style="width: 200px; height: 200px;
                             alt="product cross">
                     </a>
                     <a class="product-gallery-item" href="#"
                         data-image="/upload/<%= currentProduct.productImage3 %>"
                         data-zoom-image="/upload/<%= currentProduct.productImage3 %>"
                         onclick="changeImg(this)">
-                        <img src="/upload/<%= currentProduct.productImage3 %>"
+                        <img src="/upload/<%= currentProduct.productImage3 %>" style="width: 200px; height: 200px;"
                             alt="product with model">
                     </a>
                   
@@ -141,7 +141,7 @@
 
                   <h2> <%= currentProduct.productName %></h2>
                   <h3>$<%= currentProduct.productPrice %></h3>
-                  
+
                   <h3><s><%=currentProduct.priceBeforeOffer %></s></h3>
                   
                   <p>Mauris lobortis augue ex, ut faucibus nisi mollis ac. Sed volutpat scelerisque ex ut ullamcorper. Cras at velit quis sapien dapibus laoreet a id odio. Sed sit amet accumsan ante, eu congue metus. Aenean eros tortor, cursus quis feugiat sed vestibulum.</p>

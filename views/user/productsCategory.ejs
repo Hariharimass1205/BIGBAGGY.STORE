@@ -156,7 +156,7 @@
                     <ul class="pagination">
                       <% for( let i = 0; i < count/limit; i++ ) { %>
                       <li class="page-item">
-                        <a class="page-link" href="/productCategory?page=<%=i+1 %>"><%= %></a>
+                        <a class="page-link" href="/productCategory?page=<%=i+1 %>"><%=1 + i%></a>
                       </li>
                       <% } %>
                     </ul>

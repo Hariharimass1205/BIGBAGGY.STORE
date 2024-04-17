@@ -38,7 +38,6 @@ const walletCollection = require("../Model/walletModel.js")
 
   const cartpagefn = async (req, res) => {
     try {
-      console.log("sbhunbubiwubcb bu")
       const userInfo = req.session?.userInfo
       let userCartData = await grandTotal(req);
 
@@ -59,7 +58,6 @@ const walletCollection = require("../Model/walletModel.js")
 
   const addtoCart = async (req, res) => {
     try {
-      console.log("njsdbhushbu uukyfmd");
       let existingProduct = null;
       existingProduct = await cartCollection.findOne({
         userId: req.session.userInfo._id,
