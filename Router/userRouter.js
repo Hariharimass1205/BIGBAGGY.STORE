@@ -130,7 +130,7 @@ userRouter.post("/search",isBlocked,search)
 // cart
 userRouter.get("/cart/:id",isBlocked,isUser,cartpagefn)
 userRouter.get("/cart",isBlocked,isUser,cartpagefn)
-userRouter.post("/addto-cart/:id",isUser,isBlocked,addtoCart);
+userRouter.get("/addto-cart/:id",isUser,isBlocked,addtoCart);
 userRouter.put('/cart/decQty/:id',isBlocked,decQty)
 userRouter.put('/cart/incQty/:id',isBlocked,incQty)
 userRouter.delete('/cart/delete/:id',isBlocked,deleteFromCart);

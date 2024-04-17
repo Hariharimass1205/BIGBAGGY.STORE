@@ -38,6 +38,7 @@ const walletCollection = require("../Model/walletModel.js")
 
   const cartpagefn = async (req, res) => {
     try {
+      console.log("sbhunbubiwubcb bu")
       const userInfo = req.session?.userInfo
       let userCartData = await grandTotal(req);
 
@@ -58,17 +59,20 @@ const walletCollection = require("../Model/walletModel.js")
 
   const addtoCart = async (req, res) => {
     try {
+      console.log("njsdbhushbu uukyfmd");
       let existingProduct = null;
       existingProduct = await cartCollection.findOne({
         userId: req.session.userInfo._id,
         productId: req.params.id,
       });
-      if (existingProduct) {
+
+      const productss = await productCollection.findOne({_id: req.params.id})
+      if (existingProduct && existingProduct.productQuantity <productss.productStock ) {
         await cartCollection.updateOne(
           { _id: existingProduct._id },
           { $inc: { productQuantity: 1 } }
         );
-      } else {
+      } else if(!existingProduct) {
         await cartCollection.insertMany([
           {
             userId: req.session.userInfo._id,
