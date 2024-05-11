@@ -173,6 +173,7 @@ const decQty = async (req, res) => {
     }
   };
   
+
   const orderPlaced = async (req, res) => {
     try {
       if (req.body.razorpay_payment_id) {
@@ -231,37 +232,26 @@ const decQty = async (req, res) => {
     }
   };
 
-
   
   const orderPlacedEnd = async (req, res) => {
     try {
-      console.log(`orderPlacedEnd`);
       console.log(req.body)
     let cartData = await cartCollection
       .find({ userId: req.session.userInfo._id })
       .populate("productId");
+      console.log("cart data from orderPlacedEnd")
 
     for (const item of cartData) {
       item.productId.productStock -= item.productQuantity; // we use for reducing Qyantity
       item.productId.stockSold += 1;  //stocjSolf ++
       await item.productId.save();
     }
-    cartData.map(async (v) => {
-      v.productId.productStock -= v.productQuantity; //reducing from stock qty
-      await v.productId.save();
-      return v;
-    })
     let orderData = await orderCollection.findOne({ _id: req.session.currentOrder._id})
-
     if(req.body.razorpay_payment_id){
-
       await orderCollection.updateOne({ _id: req.session.currentOrder._id}, { $set : { paymentType: 'online'   }  })
-
     }else if(orderData.paymentType =='online'){
-
       await orderCollection.updateOne({ _id: req.session.currentOrder._id}, { $set : { paymentType: 'COD'   }  })
     }
-    
     let x = await cartCollection.findByIdAndUpdate({ _id: req.session.currentOrder._id}).populate("productId");
     res.render("user/checkout2", {
       signIn: req.session.signIn,
