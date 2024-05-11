@@ -79,8 +79,8 @@ const {
 // login 
 adminRoute.get('/',loadLogin);
 adminRoute.post('/',verifyLogin);
-adminRoute.get('/adminHome',adminHome)
-adminRoute.get('/dashboardData', dashboardData )
+adminRoute.get('/adminHome',isAdmin,adminHome)
+adminRoute.get('/dashboardData',isAdmin,dashboardData )// isadmin is  changed note it
 adminRoute.get("/logout",adminLogout);
 
 
@@ -99,7 +99,6 @@ adminRoute.get('/categories/edit/:id',isAdmin,editCategory);
 adminRoute.post('/editCategories/:id',isAdmin,editCategoriesPage)
 adminRoute.post('/categories/list/:id', isAdmin,listCategory)
 adminRoute.post('/categories/unlist/:id',isAdmin,unlistCategory)
-
 
 
 //product list

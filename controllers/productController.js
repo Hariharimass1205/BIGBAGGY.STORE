@@ -26,7 +26,6 @@ const productlist= async (req, res) => {
       }
   };
 
-
   const addProductPage = async (req, res) => {
     try {
       const categories = await categoryCollection.find({ isListed:true});
@@ -50,7 +49,7 @@ const productlist= async (req, res) => {
       if (!existingProduct) {
         await productCollection.insertMany([
           {
-            productName: req.body.productName,
+            productName: req.body.productName,  
             parentCategory: req.body.parentCategory,
             productImage1: req.files[0].filename,
             productImage2: req.files[1].filename,
@@ -69,14 +68,14 @@ const productlist= async (req, res) => {
     }
   };
 
-
   const editProductpage = async (req, res) => {
     try {
       const productId = req.params.id;
       const productData = await productCollection.findOne({_id:productId}); 
       const categories = await categoryCollection.find({})
       res.render("admin/editProduct.ejs", {
-        productData,categories
+        productData,
+        categories
         // productExists: req.session.productAlreadyExists,
       });
     } catch (error) {
@@ -144,7 +143,6 @@ const deleteProduct = async (req,res)=>{
   };
 
 
-  
   const listProduct = async (req, res) => {
     try {
       await productCollection.findOneAndUpdate(
@@ -160,7 +158,6 @@ const deleteProduct = async (req,res)=>{
 
   const search = async (req, res) => {
     try {
-
       const searchQuery  = req.body.search // Adjust according to the name attribute of your form input
       const searchProduct = await productCollection.find({
         $or: [
@@ -189,9 +186,7 @@ const deleteProduct = async (req,res)=>{
     search,
 
 
-    
   // //    user product process fn below
-
    productCategoryfn :async (req, res) => {
     try {
       let page = Number(req.query.page) || 1;
@@ -268,7 +263,6 @@ const deleteProduct = async (req,res)=>{
   },
 
        sortPriceAscending: async (req, res) => {
-  
    try {
     req.session?.shopProductData?.sort( (a,b)=>b.productPrice-a.productPrice  ) || await productCollection
      .find({ isListed: true })
@@ -278,8 +272,6 @@ const deleteProduct = async (req,res)=>{
     console.error(error);
     }
     },
-  
-    
      sortPriceDescending: async (req, res) => {
      try {
     req.session?.shopProductData?.sort( (a,b)=>a.productPrice-b.productPrice  ) || await productCollection

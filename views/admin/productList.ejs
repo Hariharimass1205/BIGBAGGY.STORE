@@ -47,7 +47,7 @@
                       <% productData.forEach(function(product, index) { %>
                           <tr>
                               <td>
-                                  <%= product.productName %>
+                                  <strong><%= product.productName %></strong>
                               </td>
                               <td>
                                   <%= product.parentCategory %>
@@ -100,7 +100,6 @@
                                                       return false;
                                                   }
                                               </script>
-
                                           </td>
                           </tr>
                           <% }); %>

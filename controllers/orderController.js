@@ -30,6 +30,7 @@ const orderManagement = async (req, res) => {
       console.error(error);
     }
   };
+
   // pending
 const changeStatusPending = async (req, res) => {
   try {
@@ -42,6 +43,7 @@ const changeStatusPending = async (req, res) => {
     console.error(error);
   }
 };
+
 
 const changeStatusShipped = async (req, res) => {
   try {
@@ -160,16 +162,20 @@ const singleorderfn =  async (req, res) => {
   try {
     const { cancelReason } = req.body;
     const orderData = await orderCollection.findOne({ _id: req.params.id });
-    await orderCollection.findByIdAndUpdate(
+
+       await orderCollection.findByIdAndUpdate(
       { _id: req.params.id },
       { $set: { orderStatus: "Cancelled", cancelReason } }
     );
+    //
+    console.log(orderData)
+    if(orderData.orderStatus == 'Delivered' &&  orderData.paymentType == 'COD' || orderData.paymentType == 'online' || orderData.paymentType == 'Wallet' ){
+      console.log("hello from cancel order")
     let walletTransaction = {
       transactionDate: new Date(),
       transactionAmount: orderData.grandTotalCost,
       transactionType: "Refund from cancelled Order",
     };
-
     await walletCollection.findOneAndUpdate(
       { userId: req.session.userInfo._id },
       {
@@ -177,6 +183,7 @@ const singleorderfn =  async (req, res) => {
         $push: { walletTransaction },
       }
     );
+  }
     res.json({ success: true });
   } catch (error) {
     console.error(error);
