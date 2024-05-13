@@ -141,9 +141,9 @@
 
                   <h2> <%= currentProduct.productName %></h2>
                   <h3>$<%= currentProduct.productPrice %></h3>
-
+                   <% if( currentProduct.priceBeforeOffer!==currentProduct.productPrice){ %>
                   <h3><s><%=currentProduct.priceBeforeOffer %></s></h3>
-                  
+                  <% } %>
                   <p>Mauris lobortis augue ex, ut faucibus nisi mollis ac. Sed volutpat scelerisque ex ut ullamcorper. Cras at velit quis sapien dapibus laoreet a id odio. Sed sit amet accumsan ante, eu congue metus. Aenean eros tortor, cursus quis feugiat sed vestibulum.</p>
                  
                   <div class="cart-actions">
