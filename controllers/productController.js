@@ -18,9 +18,12 @@ const productlist= async (req, res) => {
           productData,
           categoryList,count,
           limit,
-          productExist: req.session.productAlreadyExists,
+          productAlreadyExists:req.session.productAlreadyExists,
+          
         });
-        req.session.productAlreadyExists = null;
+        req.session.productAlreadyExists = false;
+        req.session.productAlreadyExistsNew = false;
+        req.session.save()
       } catch (error) {
         console.error(error);
       }
@@ -31,9 +34,9 @@ const productlist= async (req, res) => {
       const categories = await categoryCollection.find({ isListed:true});
       res.render("admin/addProduct.ejs", {
         categories,
-        productAlreadyExists:req.session.productAlreadyExists
+        productAlreadyExistsNew:req.session.productAlreadyExistsNew
       });
-      req.session.productAlreadyExists = null;
+      req.session.productAlreadyExistsNew = false;
     } catch (error) {
       console.error(error);
     }
@@ -60,7 +63,7 @@ const productlist= async (req, res) => {
         ]);
         res.redirect("/admin/products");
       } else {
-        req.session.productAlreadyExists = existingProduct;
+        req.session.productAlreadyExistsNew = true;
         res.redirect("/admin/addproduct");
       }
     } catch (err) {
@@ -76,7 +79,6 @@ const productlist= async (req, res) => {
       res.render("admin/editProduct.ejs", {
         productData,
         categories
-        // productExists: req.session.productAlreadyExists,
       });
     } catch (error) {
       console.error( error);
@@ -114,7 +116,7 @@ const productlist= async (req, res) => {
         );
         res.redirect("/admin/products");
       } else {
-        req.session.productAlreadyExists = existingProduct;
+        req.session.productAlreadyExists = true;
         res.redirect("/admin/products");
       }
     } catch (error) {

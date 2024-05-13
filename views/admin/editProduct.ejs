@@ -89,7 +89,7 @@
                                 <label for="Category">Category</label>
                                 <select class="form-control p_input" name="category" placeholder="category">
                                     <% categories.forEach((value)=>{ %>
-                                        <option value="<%=value.categoryName %>" selected>
+                                        <option value="<%=value.categoryName %>" >
                                             <%= value.categoryName %>
                                         </option>
                                         <% }) %>
@@ -97,6 +97,9 @@
                                 <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Save Changes</button>
                             </div>
                         </div>
+                       
+                        
+                        
                     </form>
                 </div>
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

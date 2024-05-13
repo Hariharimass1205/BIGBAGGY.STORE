@@ -80,7 +80,7 @@ const {
 adminRoute.get('/',loadLogin);
 adminRoute.post('/',verifyLogin);
 adminRoute.get('/adminHome',isAdmin,adminHome)
-adminRoute.get('/dashboardData',isAdmin,dashboardData )// isadmin is  changed note it
+adminRoute.get('/dashboardData',isAdmin,dashboardData )
 adminRoute.get("/logout",adminLogout);
 
 

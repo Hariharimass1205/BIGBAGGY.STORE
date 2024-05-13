@@ -27,6 +27,11 @@
               
           </header> <!-- card-header end// -->
           <div class="card-body">
+            <% if(productAlreadyExists) { %>
+        <div class="container pt-3 alert alert-danger pt-3" role="alert">
+            The product name  <%= productAlreadyExists.productName %> already exists
+        </div>
+         <% } %>
 
               <table id="example" class="display" style="width:100%">
                   <thead>
