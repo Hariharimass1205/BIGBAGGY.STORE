@@ -88,6 +88,9 @@
                             <div class="form-group">
                                 <label for="Category">Category</label>
                                 <select class="form-control p_input" name="category" placeholder="category">
+                                    <option value="<%=productData.parentCategory %>" >
+                                        Default :<%= productData.parentCategory %>
+                                    </option>
                                     <% categories.forEach((value)=>{ %>
                                         <option value="<%=value.categoryName %>" >
                                             <%= value.categoryName %>
