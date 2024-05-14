@@ -242,6 +242,7 @@ const deleteProduct = async (req,res)=>{
       const currentProduct = await productCollection.findOne({
         _id: req.params.id,
       });
+      console.log(currentProduct)
       var cartProductQuantity=0
     if(req.session?.currentUser?._id){
       const cartProduct = await cartCollection.findOne({ userId: req.session.currentUser._id, productId: req.params.id })

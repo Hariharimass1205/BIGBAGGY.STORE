@@ -35,7 +35,7 @@ const loadLogin = async (req, res) => {
             });
           } else {
             req.session.isAdmin = true;
-            res.redirect("admin/adminHome");
+            res.redirect("/admin/adminHome");
           }
         } else {
           res.render("admin/login", { message: "Email and password incorrect" });
