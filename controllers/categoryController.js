@@ -102,6 +102,8 @@ const categoriesPage = async (req, res) => {
         { _id: req.params.id },
         { $set: { isListed: true } }
       );
+      let list1 = await productCollection.updateMany({parentCategory: list.categoryName},{$set:{isListed:true}})
+      console.log(req.params.id)
       res.redirect("/admin/categories");
     } catch (error) {
       console.error(error);
@@ -113,6 +115,7 @@ const categoriesPage = async (req, res) => {
         { _id: req.params.id },
         { $set: { isListed: false } }
       );
+      let unlist1 = await productCollection.updateMany({parentCategory:unlist.categoryName},{$set:{isListed:false}})
       res.redirect("/admin/categories");
     } catch (error) {
       console.error(error);
