@@ -36,11 +36,9 @@
                 <tr>
                     <td><%= i + 1 %></td>
                     <td>
-                        <button disabled="disabled">
-                            <a href="/admin/orderManagement/orderStatus/<%= order._id %>">
-                                <%= order.orderNumber %>
-                            </a>
-                        </button>
+                        <a href="/admin/orderManagement/orderStatus/<%= order._id %>" style="color: blue; text-decoration: underline; cursor: pointer;">
+                            <%= order.orderNumber %>
+                        </a>
                     </td>
                     <td>₹<%= order.grandTotalCost %></td>
                     <td><%= order.paymentType %></td>

@@ -16,7 +16,6 @@ module.exports = async (referralCode) => {
         { $inc: { walletBalance: 500 }, $push: {walletTransaction} }
       );
     }
-    console.log(req.body)
   } catch (error) {
     console.error(error);
   }

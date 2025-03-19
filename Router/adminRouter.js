@@ -16,7 +16,8 @@ const {
     userListController,
     unblockUserController,
     blockUserController,
-    dashboardData
+    dashboardData,
+    getOrderDetails
 }= require("../controllers/adminController.js")
 
 const {
@@ -119,6 +120,7 @@ adminRoute.get("/orderManagement/shipped/:id",isAdmin,changeStatusShipped);
 adminRoute.get("/orderManagement/delivered/:id",isAdmin,changeStatusDelivered);
 adminRoute.get("/orderManagement/return/:id",isAdmin,changeStatusReturn);
 adminRoute.get("/orderManagement/cancelled/:id",isAdmin,changeStatusCancelled);
+adminRoute.get("/orderManagement/orderStatus/:id", isAdmin, getOrderDetails);
 
 
 // coupon 

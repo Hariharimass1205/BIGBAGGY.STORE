@@ -1,5 +1,6 @@
 const CategoryOfferModel = require("../Model/categoryOfferModel");
 const ProductModel = require("../Model/productModel");
+const productOfferModel = require("../Model/productOfferModel")
 
 const applyCategoryOffer = async () => {
     try {

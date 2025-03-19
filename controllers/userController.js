@@ -121,7 +121,6 @@ const optVerify = async (req, res) => {
   if (otp === Number(req.body.otp)) {
     const userdetails = req.session.userInfo
     const ReferalCode = Math.random().toString(36).substring(2,9);//referal code
-    console.log(userdetails)
     const {fname,lname,email,Password,confirmPass,Phone} = userdetails
     await userCollection({fname,lname,email,Password,confirmPass,Phone,ReferalCode}).save()
     if(req.session.referalCodeuseage)
@@ -237,7 +236,6 @@ const emailOtp = async (email) => {
       subject: "OTP Verification",
       text: `Your OTP IS:${otp}`,
     };
-    console.log(`from email gentrate`)
     //Send the email
     let mail = await transport.sendMail(mailOptions);
     return otp
@@ -302,7 +300,6 @@ const postEditprofilefn = async (req, res) => {
       lname: req.body.Lname,
       Phone: req.body.Phone,
     };
-    console.log(newUser)
     const updateduser = await userCollection.findByIdAndUpdate({ _id: req.params.id }, newUser);
     res.redirect("/Profile");
   } catch (error) {
@@ -337,10 +334,6 @@ const PostpassChange = async (req, res) => {
     } else {
       res.send({invalidPassword: true})
     }
-
-
-
-    console.log("1234567");
     
   } catch (error) {
     console.error(error);

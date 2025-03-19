@@ -74,7 +74,6 @@ const categoriesPage = async (req, res) => {
       let categoryExists = await categoryCollection.findOne({
         categoryName: { $regex: categoryName , $options : "i" },
       });   
-      console.log(categoryExists)
       if (!categoryExists) {
         await categoryCollection.findOneAndUpdate(
           { _id: req.params.id },
@@ -103,7 +102,6 @@ const categoriesPage = async (req, res) => {
         { $set: { isListed: true } }
       );
       let list1 = await productCollection.updateMany({parentCategory: list.categoryName},{$set:{isListed:true}})
-      console.log(req.params.id)
       res.redirect("/admin/categories");
     } catch (error) {
       console.error(error);

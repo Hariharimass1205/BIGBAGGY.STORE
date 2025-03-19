@@ -25,6 +25,7 @@ const orderManagement = async (req, res) => {
       let orderData = await orderCollection
         .find().sort({orderNumber: -1})
         .populate("userId").skip(skip).limit(limit);
+        console.log(orderData)
       res.render("admin/orderManagement", { orderData, count, limit, page });
     } catch (error) {
       console.error(error);
@@ -167,10 +168,8 @@ const singleorderfn =  async (req, res) => {
       { _id: req.params.id },
       { $set: { orderStatus: "Cancelled", cancelReason } }
     );
-    //
-    console.log(orderData)
     if(orderData.orderStatus == 'Delivered' &&  orderData.paymentType == 'COD' || orderData.paymentType == 'online' || orderData.paymentType == 'Wallet' ){
-      console.log("hello from cancel order")
+
     let walletTransaction = {
       transactionDate: new Date(),
       transactionAmount: orderData.grandTotalCost,

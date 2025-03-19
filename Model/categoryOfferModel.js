@@ -23,5 +23,5 @@ const categoryOfferSchema = new mongoose.Schema({
     default: true,
   },
 });
-
-module.exports = mongoose.model("categoryOffer", categoryOfferSchema);
+const categoryOffercollection = mongoose.model("categoryOffer", categoryOfferSchema);
+module.exports = categoryOffercollection

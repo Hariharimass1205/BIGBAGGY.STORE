@@ -1,6 +1,8 @@
 const categoryCollection = require("../Model/categoryModel");
 const productCollection = require("../Model/productModel");
 const cartCollection = require("../Model/cartModel");
+const applyOffers = require("../service/applyoffer")
+
 
 //    admin product process fn below
 const productlist= async (req, res) => {
@@ -217,8 +219,6 @@ const deleteProduct = async (req,res)=>{
       }
       let totalPages = Math.ceil(count / limit);
       let totalPagesArray = new Array(totalPages).fill(null);
-
-      
       res.render("user/productsCategory", {
         categoryData,
         productData,
@@ -242,7 +242,6 @@ const deleteProduct = async (req,res)=>{
       const currentProduct = await productCollection.findOne({
         _id: req.params.id,
       });
-      console.log(currentProduct)
       var cartProductQuantity=0
     if(req.session?.currentUser?._id){
       const cartProduct = await cartCollection.findOne({ userId: req.session.currentUser._id, productId: req.params.id })

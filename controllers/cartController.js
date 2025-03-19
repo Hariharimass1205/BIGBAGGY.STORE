@@ -194,7 +194,6 @@ const decQty = async (req, res) => {
         });
         if (walletData.walletBalance >= req.session.grandTotal) {
           walletData.walletBalance -= req.session.grandTotal;
-          console.log("wallet tranaction data")
           let walletTransaction = {
             transactionDate : new Date(),
             transactionAmount: -req.session.grandTotal,
@@ -215,7 +214,6 @@ const decQty = async (req, res) => {
           return res.json({ insufficientWalletBalance: true });
         }
       } else {
-        console.log("incase of COD")
         await orderCollection.updateOne(
           { _id: req.session.currentOrder._id },
           {
@@ -235,11 +233,9 @@ const decQty = async (req, res) => {
   
   const orderPlacedEnd = async (req, res) => {
     try {
-      console.log(req.body)
     let cartData = await cartCollection
       .find({ userId: req.session.userInfo._id })
       .populate("productId");
-      console.log("cart data from orderPlacedEnd")
 
     for (const item of cartData) {
       item.productId.productStock -= item.productQuantity; // we use for reducing Qyantity

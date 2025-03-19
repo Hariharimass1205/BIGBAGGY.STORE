@@ -5,7 +5,6 @@ const productOfferCollection = require("../Model/productOfferModel");
 module.exports = {
   applyProductOffer: async (from) => {
     try {
-      console.log(` req applyProductOffer `)
       // updating the currentStatus field of productOfferCollection by checking with the current date
       let productOfferData = await productOfferCollection.find({});
       productOfferData.forEach(async (v) => {
@@ -68,7 +67,6 @@ async function offerExistsAndActiveFn(v, offerExists, from) {
     let productPrice = Math.round(
       v.priceBeforeOffer * (1 - productOfferPercentage * 0.01)
     );
-    console.log(productPrice)
     await productCollection.updateOne(
       { _id: v._id },
       {

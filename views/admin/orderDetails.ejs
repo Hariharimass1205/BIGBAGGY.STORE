@@ -1,0 +1,69 @@
+<%- include('../layouts/adminHeader.ejs') %>
+
+<main style="background-color: white; color: black; padding: 20px; font-family: Arial, sans-serif;">
+    <div style="max-width: 800px; margin: auto; border: 1px solid #ddd; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+        <h2 style="text-align: center; margin-bottom: 20px;">Order Details</h2>
+        
+        <p><strong>Order No:</strong> <%= orderData.orderNumber %></p>
+        <p><strong>Amount:</strong> ₹<%= orderData.grandTotalCost %></p>
+        <p><strong>Payment Type:</strong> <%= orderData.paymentType %></p>
+        <p><strong>Status:</strong> <%= orderData.orderStatus %></p>
+        
+        <% if (isCancelled) { %>
+            <p><strong>Cancel Reason:</strong> <%= orderData.cancelReason || "NIL" %></p>
+        <% } else if (isReturn) { %>
+            <p><strong>Return Reason:</strong> <%= orderData.ReturnReason || "NIL" %></p>
+        <% } %>
+
+        <% if (shippingDetails) { %>
+            <h3 style="border-top: 1px solid #ddd; padding-top: 10px;">Shipping Address</h3>
+            <p><strong>Name:</strong> <%= shippingDetails.name %></p>
+            <p><strong>Phone:</strong> <%= shippingDetails.Phone %></p>
+            <p><strong>Address:</strong> <%= shippingDetails.Address %></p>
+            <p><strong>City:</strong> <%= shippingDetails.City %></p>
+            <p><strong>State:</strong> <%= shippingDetails.State %></p>
+        <% } else { %>
+            <p style="color: red;">Shipping details not available</p>
+        <% } %>
+
+        <h3 style="border-top: 1px solid #ddd; padding-top: 10px;">Ordered Products</h3>
+        <% if (products.length > 0) { %>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Image</th>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Product</th>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Price</th>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Quantity</th>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% products.forEach(item => { %>
+                        <tr>
+                            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
+                                <img src="/uploads/<%= item.productId.productImage1 %>" alt="<%= item.productId.productName %>" style="width: 60px; height: 60px; border-radius: 5px;">
+                                <img src="/upload/<%= currentProduct.productImage1 %>"style="width: 300px; height: 300px;
+                            alt="product side">
+                            </td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">
+                                <%= item.productId.productName %>
+                            </td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">₹<%= item.productId.productPrice %></td>
+                            <td style="border: 1px solid #ddd; padding: 8px;"><%= item.productQuantity %></td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">₹<%= item.totalCostPerProduct %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>No products found in this order.</p>
+        <% } %>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="/admin/orderManagement" style="text-decoration: none; background-color: #007bff; color: white; padding: 10px 20px; border-radius: 5px; display: inline-block;">Back to Orders</a>
+        </div>
+    </div>
+</main>
+
+<%- include('../layouts/adminFooter.ejs') %>

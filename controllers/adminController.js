@@ -6,6 +6,7 @@ const dashboard = require("../service/dashboardChart");
 
 //requiring bcrypt
 const bcrypt = require("bcrypt");
+const orderCollection = require("../Model/orderModel");
 
 const loadLogin = async (req, res) => {
     try {
@@ -57,7 +58,6 @@ const loadLogin = async (req, res) => {
       if (!productData) {
         productData = [];
       }
-      // console.log(productData)
   
       res.render("admin/dashboard", { productData, userData });
     } catch (error) {
@@ -163,8 +163,44 @@ const adminLogout = async (req, res) => {
       console.log(error);
     }
   };
+
+  const getOrderDetails = async (req, res) => {
+    try {
+        let orderData = await orderCollection
+            .findOne({ _id: req.params.id })
+            .populate("addressChosen") // Populating address
+            .populate("cartData.productId"); // ✅ Populating products
+
+        if (!orderData) {
+            return res.status(404).send("Order not found");
+        }
+
+        let shippingDetails = orderData.addressChosen || null;
+        let products = orderData.cartData || [];
+
+        let isCancelled = orderData.orderStatus === "Cancelled";
+        let isReturn = orderData.orderStatus === "Return";
+
+        res.render("admin/orderDetails", {
+            currentUser: req.session.adminInfo, 
+            orderData,
+            shippingDetails,
+            products, // ✅ Pass products data
+            isCancelled,
+            isReturn,
+        });
+    } catch (error) {
+        console.error("Error fetching order details:", error);
+        res.status(500).send("Internal Server Error");
+    }
+};
+
+
+
+  
   
   module.exports = {
+    getOrderDetails,
     loadLogin,
     verifyLogin,
     adminHome,

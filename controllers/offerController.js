@@ -4,6 +4,7 @@ const categoryModel = require("../Model/categoryModel")
 const productOfferCollection = require("../Model/productOfferModel");
 const categoryOfferModel = require("../Model/categoryOfferModel")
 const formatDate = require("../service/dateFormate");
+const applyoffer = require("../service/applyoffer")
 const applyProductOffers =
   require("../service/applyProductOffers").applyProductOffer;
 const applyCategoryOffer= require("../service/applyCategoryOffer").applyCategoryOffer;
@@ -13,7 +14,6 @@ const applyCategoryOffer= require("../service/applyCategoryOffer").applyCategory
     try {
       // updating the currentStatus field by checking with the current date
       let productOfferData = await productOfferCollection.find();
-      console.log(productOfferData)
       productOfferData.forEach(async (v) => {
         await productOfferCollection.updateOne(
           { _id: v._id },
@@ -49,14 +49,9 @@ const applyCategoryOffer= require("../service/applyCategoryOffer").applyCategory
     try {
       //check if the product already has an offer applied
       let { productName } = req.body;
-      console.log(req.body)
       let existingOffer = await productOfferCollection.findOne({ productName });
-      console.log(existingOffer)
       if (!existingOffer) {
-        //if offer for that particular product doesn't exist:
-        console.log(productName)
         let productData = await productCollection.findOne({productName : productName });
-        console.log(` harihari------${productData}`)
         let { productOfferPercentage, startDate, endDate } = req.body;
         await productOfferCollection.insertMany([
           {
